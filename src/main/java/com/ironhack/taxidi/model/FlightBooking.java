@@ -24,9 +24,9 @@ public class FlightBooking extends Booking{
 
     private String airline;
 
-    private Number numPassengers;
+    private int numPassengers;
 
-    public FlightBooking(Long id, BookingType bookingType, User user, String departureDateTime, String arrivalDateTime, String origin, String destination, String flightNumber, String airline, Number numPassengers) {
+    public FlightBooking(Long id, BookingType bookingType, User user, String departureDateTime, String arrivalDateTime, String origin, String destination, String flightNumber, String airline, int numPassengers) {
         super(id, bookingType, user);
         this.departureDateTime = departureDateTime;
         this.arrivalDateTime = arrivalDateTime;

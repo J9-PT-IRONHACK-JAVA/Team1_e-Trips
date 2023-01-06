@@ -20,7 +20,7 @@ public class HotelBookingDTO {
     private String hotelName;
 
     @NotNull(message = "number of guests date can't be blank")
-    private Number numGuests;
+    private int numGuests;
 
     public static HotelBookingDTO fromUser(HotelBooking hotelBooking){
         var hotelBookingDTO = new HotelBookingDTO();

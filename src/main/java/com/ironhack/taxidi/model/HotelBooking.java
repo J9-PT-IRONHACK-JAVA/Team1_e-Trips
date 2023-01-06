@@ -20,9 +20,9 @@ public class HotelBooking extends Booking {
 
     private String hotelName;
 
-    private Number numGuests;
+    private int numGuests;
 
-    public HotelBooking(Long id, BookingType bookingType, User user, String arrivalDate, String departureDate, String hotelAddress, String hotelName, Number numGuests) {
+    public HotelBooking(Long id, BookingType bookingType, User user, String arrivalDate, String departureDate, String hotelAddress, String hotelName, int numGuests) {
         super(id, bookingType, user);
         this.arrivalDate = arrivalDate;
         this.departureDate = departureDate;

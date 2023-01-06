@@ -1,5 +1,6 @@
 package com.ironhack.taxidi.demo;
 
+import com.ironhack.taxidi.enums.BookingType;
 import com.ironhack.taxidi.model.Booking;
 import com.ironhack.taxidi.model.FlightBooking;
 import com.ironhack.taxidi.model.HotelBooking;
@@ -38,10 +39,10 @@ public class Dataloader {
         log.info("User " + user2.getUsername() + " was created successfully");
         log.info("Finished demo user loading.");
 
-        Booking flightBooking1 = new FlightBooking(1L, com.ironhack.taxidi.enums.BookingType.FLIGHT, user1,"2023-11-01T11:35:00", "2023-11-01T12:35:00", "BCN", "MAD", "VY2340", "Vueling", 1);
+        Booking flightBooking1 = new FlightBooking(1L, BookingType.FLIGHT, user1,"2023-11-01T11:35:00", "2023-11-01T12:35:00", "BCN", "MAD", "VY2340", "Vueling", 1);
         bookingRepository.save(flightBooking1);
 
-        Booking hotelBooking1 = new HotelBooking(2L, com.ironhack.taxidi.enums.BookingType.HOTEL, user2, "2023-11-01T11:35:00", "2023-11-05T11:35:00", "Diagonal 23", "Hilton", 1);
+        Booking hotelBooking1 = new HotelBooking(2L, BookingType.HOTEL, user2, "2023-11-01T11:35:00", "2023-11-05T11:35:00", "Diagonal 23", "Hilton", 1);
         bookingRepository.save(hotelBooking1);
 
     }

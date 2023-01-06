@@ -30,7 +30,7 @@ public class FlightBookingDTO {
     private String airline;
 
     @NotNull(message = "number of passengers can't be blank")
-    private Number numPassengers;
+    private int numPassengers;
 
     public static FlightBookingDTO fromUser(FlightBooking flightBooking){
         var flightBookingDTO = new FlightBookingDTO();
