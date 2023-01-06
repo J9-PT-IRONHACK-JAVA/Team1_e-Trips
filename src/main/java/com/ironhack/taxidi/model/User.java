@@ -1,7 +1,6 @@
 package com.ironhack.taxidi.model;
 
 import com.ironhack.taxidi.dto.UserDTO;
-import com.ironhack.taxidi.enums.UserRoles;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,17 +27,16 @@ public class User {
     @UpdateTimestamp
     private Instant updateTime;
 
-    private String user_name;
+    private String username;
     private String password;
     private String email;
-    private UserRoles role;
+    private String role;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Booking> items = new ArrayList<Booking>();
 
-    public User(Long user_id, String user_name, String password, String email, UserRoles role) {
-        this.user_id = user_id;
-        this.user_name = user_name;
+    public User(String username, String password, String email, String role) {
+        this.username = username;
         this.password = password;
         this.email = email;
         this.role = role;
@@ -46,7 +44,7 @@ public class User {
 
     public static User fromDTO(UserDTO userDTO){
         var user = new User();
-        user.setUser_name(userDTO.getUser_name());
+        user.setUsername(userDTO.getUsername());
         user.setPassword(userDTO.getPassword());
         user.setEmail(userDTO.getEmail());
         user.setRole(userDTO.getRole());

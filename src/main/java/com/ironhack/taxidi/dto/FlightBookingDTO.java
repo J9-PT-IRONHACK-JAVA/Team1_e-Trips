@@ -12,10 +12,10 @@ import java.util.Date;
 @Data
 public class FlightBookingDTO {
     @NotBlank(message = "departure can't be blank")
-    private Date departureDateTime;
+    private String departureDateTime;
 
     @NotBlank(message = "arrival can't be blank")
-    private Date arrivalDateTime;
+    private String arrivalDateTime;
 
     @NotBlank(message = "origin can't be blank")
     private String origin;

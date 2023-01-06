@@ -11,7 +11,6 @@ public class BookingDTO {
     @NotBlank(message = "Booking type can't be blank")
     private BookingType bookingType;
 
-
     public static BookingDTO fromBooking(Booking booking){
         var bookingDTO = new BookingDTO();
         bookingDTO.setId(booking.getId());
