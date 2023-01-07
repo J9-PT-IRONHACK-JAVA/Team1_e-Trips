@@ -12,17 +12,17 @@ import java.util.Date;
 @Entity
 @NoArgsConstructor
 public class HotelBooking extends Booking {
-    private Date arrivalDate;
+    private String arrivalDate;
 
-    private Date departureDate;
+    private String departureDate;
 
     private String hotelAddress;
 
     private String hotelName;
 
-    private Number numGuests;
+    private int numGuests;
 
-    public HotelBooking(Long id, BookingType bookingType, User user, Date arrivalDate, Date departureDate, String hotelAddress, String hotelName, Number numGuests) {
+    public HotelBooking(Long id, BookingType bookingType, User user, String arrivalDate, String departureDate, String hotelAddress, String hotelName, int numGuests) {
         super(id, bookingType, user);
         this.arrivalDate = arrivalDate;
         this.departureDate = departureDate;

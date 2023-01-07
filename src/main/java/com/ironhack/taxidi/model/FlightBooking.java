@@ -12,9 +12,9 @@ import java.util.Date;
 @Entity
 @NoArgsConstructor
 public class FlightBooking extends Booking{
-    private Date departureDateTime;
+    private String departureDateTime;
 
-    private Date arrivalDateTime;
+    private String arrivalDateTime;
 
     private String origin;
 
@@ -24,9 +24,9 @@ public class FlightBooking extends Booking{
 
     private String airline;
 
-    private Number numPassengers;
+    private int numPassengers;
 
-    public FlightBooking(Long id, BookingType bookingType, User user, Date departureDateTime, Date arrivalDateTime, String origin, String destination, String flightNumber, String airline, Number numPassengers) {
+    public FlightBooking(Long id, BookingType bookingType, User user, String departureDateTime, String arrivalDateTime, String origin, String destination, String flightNumber, String airline, int numPassengers) {
         super(id, bookingType, user);
         this.departureDateTime = departureDateTime;
         this.arrivalDateTime = arrivalDateTime;

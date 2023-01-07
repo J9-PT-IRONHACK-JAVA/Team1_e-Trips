@@ -2,7 +2,6 @@ package com.ironhack.taxidi.model;
 
 import com.ironhack.taxidi.dto.BookingDTO;
 import com.ironhack.taxidi.enums.BookingType;
-import com.ironhack.taxidi.enums.UserRoles;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
