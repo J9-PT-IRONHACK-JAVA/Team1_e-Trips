@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 
 @Data
@@ -25,19 +26,24 @@ public class Booking {
     @UpdateTimestamp
     private Instant updateTime;
     private BookingType bookingType;
+
+    private BigDecimal price;
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "booked_by")
     private User user;
 
-    public Booking(Long id, BookingType bookingType, User user) {
+    public Booking(Long id, BookingType bookingType, User user, BigDecimal price) {
         this.id = id;
         this.bookingType = bookingType;
         this.user = user;
+        this.price = price;
     }
     public static Booking fromDTO(BookingDTO bookingDTO){
         var booking = new Booking();
         booking.setBookingType(bookingDTO.getBookingType());
         booking.setId(bookingDTO.getId());
+        booking.setPrice(bookingDTO.getPrice());
         return booking;
     }
 }

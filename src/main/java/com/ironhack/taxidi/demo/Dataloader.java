@@ -16,6 +16,10 @@ import org.springframework.context.event.EventListener;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Configuration
 @Component
 @RequiredArgsConstructor
@@ -39,10 +43,10 @@ public class Dataloader {
         log.info("User " + user2.getUsername() + " was created successfully");
         log.info("Finished demo user loading.");
 
-        Booking flightBooking1 = new FlightBooking(1L, BookingType.FLIGHT, user1,"2023-11-01T11:35:00", "2023-11-01T12:35:00", "BCN", "MAD", "VY2340", "Vueling", 1);
+        Booking flightBooking1 = new FlightBooking(1L, BookingType.FLIGHT, user1, LocalDateTime.of(2023, 9,28,12,10), LocalDateTime.of(2023, 9,28,13,15), "BCN", "MAD", "VY2340", "Vueling", 1, new BigDecimal(56.99));
         bookingRepository.save(flightBooking1);
 
-        Booking hotelBooking1 = new HotelBooking(2L, BookingType.HOTEL, user2, "2023-11-01T11:35:00", "2023-11-05T11:35:00", "Diagonal 23", "Hilton", 1);
+        Booking hotelBooking1 = new HotelBooking(2L, BookingType.HOTEL, user2, LocalDate.of(2023, 7, 15), LocalDate.of(2023, 7, 17), "Diagonal 23", "Hilton", 1, new BigDecimal(78.89));
         bookingRepository.save(hotelBooking1);
 
     }

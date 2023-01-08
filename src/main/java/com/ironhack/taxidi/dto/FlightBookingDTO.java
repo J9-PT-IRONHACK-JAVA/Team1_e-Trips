@@ -7,15 +7,16 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
 public class FlightBookingDTO {
     @NotBlank(message = "departure can't be blank")
-    private String departureDateTime;
+    private LocalDateTime departureDateTime;
 
     @NotBlank(message = "arrival can't be blank")
-    private String arrivalDateTime;
+    private LocalDateTime arrivalDateTime;
 
     @NotBlank(message = "origin can't be blank")
     private String origin;

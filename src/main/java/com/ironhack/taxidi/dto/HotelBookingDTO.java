@@ -5,13 +5,15 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+import java.time.LocalDate;
+
 @Data
 public class HotelBookingDTO {
     @NotBlank(message = "arrival date can't be blank")
-    private String arrivalDate;
+    private LocalDate arrivalDate;
 
     @NotBlank(message = "departure date can't be blank")
-    private String departureDate;
+    private LocalDate departureDate;
 
     @NotBlank(message = "address date can't be blank")
     private String hotelAddress;
