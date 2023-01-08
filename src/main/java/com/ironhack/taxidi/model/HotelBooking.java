@@ -6,15 +6,18 @@ import jakarta.persistence.Entity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
 @Entity
 @NoArgsConstructor
 public class HotelBooking extends Booking {
-    private String arrivalDate;
+    private LocalDate arrivalDate;
 
-    private String departureDate;
+    private LocalDate departureDate;
 
     private String hotelAddress;
 
@@ -22,8 +25,8 @@ public class HotelBooking extends Booking {
 
     private int numGuests;
 
-    public HotelBooking(Long id, BookingType bookingType, User user, String arrivalDate, String departureDate, String hotelAddress, String hotelName, int numGuests) {
-        super(id, bookingType, user);
+    public HotelBooking(Long id, BookingType bookingType, User user, LocalDate arrivalDate, LocalDate departureDate, String hotelAddress, String hotelName, int numGuests, BigDecimal price) {
+        super(id, bookingType, user, price);
         this.arrivalDate = arrivalDate;
         this.departureDate = departureDate;
         this.hotelAddress = hotelAddress;
