@@ -4,14 +4,15 @@ import com.ironhack.backend.enums.BookingType;
 import jakarta.persistence.Entity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 @Data
 @Entity
 @NoArgsConstructor
 public class FlightBooking extends Booking{
-    private String departureDateTime;
+    private LocalDateTime departureDateTime;
 
-    private String arrivalDateTime;
+    private LocalDateTime arrivalDateTime;
 
     private String origin;
 
@@ -23,8 +24,8 @@ public class FlightBooking extends Booking{
 
     private int numPassengers;
 
-    public FlightBooking(Long id, BookingType bookingType, User user, String departureDateTime, String arrivalDateTime, String origin, String destination, String flightNumber, String airline, int numPassengers) {
-        super(id, bookingType, user);
+    public FlightBooking(Long id, BookingType bookingType, User user, LocalDateTime departureDateTime, LocalDateTime arrivalDateTime, String origin, String destination, String flightNumber, String airline, int numPassengers, BigDecimal price) {
+        super(id, bookingType, user, price);
         this.departureDateTime = departureDateTime;
         this.arrivalDateTime = arrivalDateTime;
         this.origin = origin;
