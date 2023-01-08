@@ -5,11 +5,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
-<<<<<<< Updated upstream:src/main/java/com/ironhack/taxidi/dto/FlightBookingDTO.java
-import java.util.Date;
-=======
-import java.time.LocalDateTime;
->>>>>>> Stashed changes:backend/src/main/java/com/ironhack/backend/dto/FlightBookingDTO.java
 
 @Data
 public class FlightBookingDTO {

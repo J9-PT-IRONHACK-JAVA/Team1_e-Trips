@@ -5,13 +5,6 @@ import jakarta.persistence.Entity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-<<<<<<< Updated upstream:src/main/java/com/ironhack/taxidi/model/FlightBooking.java
-import java.util.Date;
-=======
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
->>>>>>> Stashed changes:backend/src/main/java/com/ironhack/backend/model/FlightBooking.java
-
 @Data
 @Entity
 @NoArgsConstructor

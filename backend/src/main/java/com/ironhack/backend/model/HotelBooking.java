@@ -5,12 +5,7 @@ import jakarta.persistence.Entity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-<<<<<<< Updated upstream:src/main/java/com/ironhack/taxidi/model/HotelBooking.java
-import java.util.Date;
-=======
-import java.math.BigDecimal;
-import java.time.LocalDate;
->>>>>>> Stashed changes:backend/src/main/java/com/ironhack/backend/model/HotelBooking.java
+
 
 @Data
 @Entity
