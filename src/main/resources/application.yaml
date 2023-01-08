@@ -5,9 +5,16 @@ spring:
     password: 1r0nh4ck3r
   jpa:
     show-sql: true # show the commands that are being executed
-    #    generate-ddl : true
+    #   generate-ddl : true
     hibernate:
       ddl-auto: create # create, create-drop, validate, none, update ....
 
   profiles:
     active: demo
+
+amadeus:
+  oauth:
+    #   client_id:
+    #   client_secret:
+
+    accessToken: bdQt9FFK7v6pG7skBVSCxE7uRIC0
