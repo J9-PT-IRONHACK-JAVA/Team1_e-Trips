@@ -14,7 +14,6 @@ spring:
 
 amadeus:
   oauth:
-    #   client_id:
-    #   client_secret:
-
-    accessToken: bdQt9FFK7v6pG7skBVSCxE7uRIC0
+    # client_id:
+    # client_secret:
+    accessToken: oZ5XDoWVSCZBDKiXHHNTS5At8Cqf
