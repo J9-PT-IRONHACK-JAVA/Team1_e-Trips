@@ -2,10 +2,8 @@ package com.ironhack.taxidi.proxy;
 
 import com.ironhack.taxidi.config.AmadeusFeignClientConfiguration;
 import com.ironhack.taxidi.dto.amadeusFlightsDTOs.InspirationResponse;
-import com.nimbusds.oauth2.sdk.TokenResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @FeignClient(name = "flightsAmadeus", url = "https://test.api.amadeus.com", configuration = AmadeusFeignClientConfiguration.class)
@@ -13,6 +11,9 @@ public interface FlightsProxy {
 
     @GetMapping("/v1/shopping/flight-destinations")
     InspirationResponse getInspirationFlights(@RequestParam("origin") String origin, @RequestParam("departureDate") String departureDate);
+
+    @GetMapping("/v1/shopping/flight-destinations")
+    InspirationResponse getInspirationFlights(@RequestParam("origin") String origin);
 
 
 /*

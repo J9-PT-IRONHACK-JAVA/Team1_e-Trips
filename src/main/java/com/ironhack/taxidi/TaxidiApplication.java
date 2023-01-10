@@ -8,6 +8,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
+import java.util.Optional;
+
 @SpringBootApplication
 @EnableFeignClients
 @RequiredArgsConstructor
@@ -24,7 +26,7 @@ public class TaxidiApplication implements CommandLineRunner {
 
         //Only to show that the API proxy is working:
         System.out.println("\nThese are the best flight deals from your selected origin and departure date:\n");
-        var printResults = flightApiService.getFlightsOriginDate("MAD", "2023-02-11");
+        var printResults = flightApiService.getFlightsOriginDate(Optional.of("MAD"), Optional.of("2023-02-11"));
         for (int i = 0; i < printResults.size(); i++) {
             System.out.println(i+1 + ". " + printResults.get(i).toString());
         }
