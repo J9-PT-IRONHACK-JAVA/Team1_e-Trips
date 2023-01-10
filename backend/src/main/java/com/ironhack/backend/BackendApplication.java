@@ -1,6 +1,7 @@
 package com.ironhack.backend;
 
 
+import com.ironhack.backend.proxy.AuthAmadeusProxy;
 import com.ironhack.backend.service.FlightApiService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -27,7 +28,7 @@ public class BackendApplication implements CommandLineRunner {
 
             //Only to show that the API proxy is working:
             System.out.println("\nThese are the best flight deals from your selected origin and departure date:\n");
-            var printResults = flightApiService.getFlightsOriginDate("MAD", "2023-02-11");
+            var printResults = flightApiService.getFlightsByOriginAndDate("MAD", "2023-02-11");
             for (int i = 0; i < printResults.size(); i++) {
                 System.out.println(i+1 + ". " + printResults.get(i).toString());
             }

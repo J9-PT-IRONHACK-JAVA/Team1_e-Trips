@@ -15,6 +15,7 @@ spring:
 
 amadeus:
   oauth:
-    # client_id:
-    # client_secret:
-    accessToken: cNocJrouAJ4cIeAAVNOAgdsQouAS
+    #client_id: ${AMADEUS.CLIENT.ID}
+    #client_secret: ${AMADEUS.CLIENT.SECRET}
+    client_id: Uot14gEXALZgcN3Bg95FW6YeIAGIfoD7
+    client_secret: 4xI9Gcf0U7SlfXIM

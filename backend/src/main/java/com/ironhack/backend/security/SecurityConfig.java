@@ -29,7 +29,7 @@ public class SecurityConfig {
         return http
                 .csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers(HttpMethod.GET,"/public").permitAll()
+                .requestMatchers(HttpMethod.GET,"/flight-search").permitAll()
                 .requestMatchers(HttpMethod.POST, "/secret").hasRole("USER")
                 .requestMatchers(HttpMethod.PUT, "/ultra").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.DELETE, "/ultra").hasRole("ADMIN")
