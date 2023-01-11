@@ -8,11 +8,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Optional;
+
 @FeignClient(name = "flightsAmadeus", url = "https://test.api.amadeus.com", configuration = AmadeusFeignClientConfiguration.class)
 public interface FlightsProxy {
 
     @GetMapping("/v1/shopping/flight-destinations")
     InspirationResponse getInspirationFlights(@RequestParam("origin") String origin, @RequestParam("departureDate") String departureDate);
+    @GetMapping("/v1/shopping/flight-destinations")
+    InspirationResponse getInspirationFlightsOnlyOrigin(@RequestParam("origin") String origin);
 
 
 /*
