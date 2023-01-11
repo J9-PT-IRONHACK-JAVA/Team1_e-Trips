@@ -7,29 +7,39 @@
           type="text"
           class="searchTerm"
           placeholder="Where would you like to travel?"
-          v-model="query"
+          v-model="origin"
         />
-        <button type="submit" class="searchButton">Search</button>
+        <input
+          type="text"
+          class="searchTerm"
+          placeholder="When would you like to travel?"
+          v-model="date"
+        />
+        <button type="submit" class="searchButton" @click="search()">
+          Search
+        </button>
       </div>
     </div>
     <div class="card-container">
       <BookingCard
         v-for="(item, index) in items"
         :key="index"
-        :id="index"
+        :id="calcId(index)"
         :inBookings="false"
       >
         <template #image>
-          <img
-            :src="`https://picsum.photos/id/${
-              index + Math.floor(Math.random() * (180 - 30)) + 30
-            }/500/300`"
-          />
+          <img :src="c_src(index)" />
         </template>
-        <template #destination> {{ item.destination }}</template>
-        <template #departureDate> {{ item.departureDate }} </template>
-        <template #returnDate> {{ item.returnDate }}</template>
-        <template #price> {{ item.price }}</template>
+        <template #destination>
+          {{
+            formatAirport(item.destination) + " - " + item.destination
+          }}</template
+        >
+        <template #departureDate
+          >Departure date: {{ item.departureDate }}
+        </template>
+        <template #returnDate>Return date: {{ item.returnDate }}</template>
+        <template #price> {{ item.price }} EUR</template>
       </BookingCard>
     </div>
     <LoginModal v-if="showModal" @close="showModal = false" />
@@ -39,6 +49,12 @@
 <script>
 import BookingCard from "./BookingCard.vue";
 import LoginModal from "./LoginModal.vue";
+import {
+  getFlights,
+  getFlightsByOrigin,
+  getFlightsByDate,
+} from "../services/FlightService";
+import { getAirportName } from "../utils/AirportCodes";
 
 export default {
   name: "DashboardView",
@@ -51,66 +67,51 @@ export default {
   },
   data() {
     return {
-      showModal: true,
-      items: [
-        {
-          index: 1,
-          destination: "New York",
-          departureDate: "03/03/2023",
-          returnDate: "23/03/2023",
-          price: "397EUR",
-        },
-        {
-          index: 2,
-          destination: "Madrid",
-          departureDate: "03/03/2023",
-          returnDate: "23/03/2023",
-          price: "37EUR",
-        },
-        {
-          index: 3,
-          destination: "London",
-          departureDate: "03/03/2023",
-          returnDate: "23/03/2023",
-          price: "37EUR",
-        },
-        {
-          index: 4,
-          destination: "Athens",
-          departureDate: "03/03/2023",
-          returnDate: "23/03/2023",
-          price: "97EUR",
-        },
-        {
-          index: 5,
-          destination: "Valencia",
-          departureDate: "03/03/2023",
-          returnDate: "23/03/2023",
-          price: "97EUR",
-        },
-        {
-          index: 6,
-          destination: "Mykonos",
-          departureDate: "03/03/2023",
-          returnDate: "23/03/2023",
-          price: "97EUR",
-        },
-        {
-          index: 7,
-          destination: "Rome",
-          departureDate: "03/03/2023",
-          returnDate: "23/03/2023",
-          price: "97EUR",
-        },
-        {
-          index: 8,
-          destination: "Paris",
-          departureDate: "03/03/2023",
-          returnDate: "23/03/2023",
-          price: "97EUR",
-        },
-      ],
+      showModal: false,
+      items: [],
+      origin: "MAD",
+      date: null,
     };
+  },
+
+  methods: {
+    calcId(index) {
+      return `id-${index}`;
+    },
+
+    c_src(index) {
+      return `https://picsum.photos/id/${
+        index + Math.floor(Math.random() * (180 - 30)) + 30
+      }/500/300`;
+    },
+    /*
+    formatDate(date) {
+      return date.split("").reverse().join("").toString().replaceAll(",", "-");
+    },*/
+
+    formatAirport(iataCode) {
+      return getAirportName(iataCode);
+    },
+
+    search() {
+      this.getSearchResults(this.origin, this.date);
+    },
+
+    async getSearchResults(origin, departureDate) {
+      if (origin && departureDate) {
+        const response = await getFlights(origin, departureDate);
+        this.items = response;
+      } else if (departureDate) {
+        const response = await getFlightsByDate(departureDate);
+        this.items = response;
+      } else if (origin) {
+        const response = await getFlightsByOrigin(origin);
+        this.items = response;
+      }
+    },
+  },
+  created() {
+    this.getSearchResults("MAD", null);
   },
 };
 </script>

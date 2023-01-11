@@ -26,7 +26,7 @@
 <script>
 import BookingCard from "./BookingCard.vue";
 export default {
-  name: "DashboardView",
+  name: "MyBookings",
   components: {
     BookingCard,
   },
