@@ -19,3 +19,8 @@ amadeus:
     #client_secret: ${AMADEUS.CLIENT.SECRET}
     client_id: Uot14gEXALZgcN3Bg95FW6YeIAGIfoD7
     client_secret: 4xI9Gcf0U7SlfXIM
+
+hotel_beds:
+  api_keys:
+    key: 90d65cd70f1f8337433ce372da8d757b
+    secret: a321d5045f
