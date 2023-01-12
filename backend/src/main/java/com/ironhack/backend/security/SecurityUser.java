@@ -26,7 +26,7 @@ public record SecurityUser(User user) implements UserDetails{
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return user.getIsAccountNonLocked();
     }
 
     @Override
@@ -41,7 +41,9 @@ public record SecurityUser(User user) implements UserDetails{
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays.stream(user.getRole().split(","))
+        return Arrays.stream(user
+                        .getRoles()
+                        .split(","))
                 .map(SimpleGrantedAuthority::new)
                 .toList();
     }

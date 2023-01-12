@@ -35,6 +35,7 @@ public class Dataloader {
     public void storeUser(){
         log.info("Starting demo user loading...");
         User user1 = new User("user", passwordEncoder.encode("user"), "user@user.com","ROLE_USER");
+
         userRepository.save(user1);
         log.info("User " + user1.getUsername() + " was created successfully");
 

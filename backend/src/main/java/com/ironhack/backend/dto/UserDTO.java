@@ -16,7 +16,7 @@ public class UserDTO {
     @Email
     private String email;
     @NotBlank(message = "Role can't be blank")
-    private String role;
+    private String roles;
 
     public static UserDTO fromUser(User user){
         var userDTO = new UserDTO();
@@ -24,7 +24,7 @@ public class UserDTO {
         userDTO.setUsername(user.getUsername());
         userDTO.setEmail(user.getEmail());
         userDTO.setPassword(user.getPassword());
-        userDTO.setRole(user.getRole());
+        userDTO.setRoles(user.getRoles());
         return userDTO;
     }
 }
