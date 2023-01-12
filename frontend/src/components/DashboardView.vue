@@ -10,7 +10,7 @@
           v-model="origin"
         />
         <input
-          type="text"
+          type="date"
           class="searchTerm"
           placeholder="When would you like to travel?"
           v-model="date"
@@ -28,7 +28,7 @@
         :inBookings="false"
       >
         <template #image>
-          <img :src="c_src(index)" />
+          <img :src="src()" />
         </template>
         <template #destination>
           {{
@@ -36,9 +36,11 @@
           }}</template
         >
         <template #departureDate
-          >Departure date: {{ item.departureDate }}
+          >Departure date: {{ formatDate(item.departureDate) }}
         </template>
-        <template #returnDate>Return date: {{ item.returnDate }}</template>
+        <template #returnDate
+          >Return date: {{ formatDate(item.returnDate) }}</template
+        >
         <template #price> {{ item.price }} EUR</template>
       </BookingCard>
     </div>
@@ -79,15 +81,15 @@ export default {
       return `id-${index}`;
     },
 
-    c_src(index) {
+    src() {
       return `https://picsum.photos/id/${
-        index + Math.floor(Math.random() * (180 - 30)) + 30
+        this.items.length + Math.floor(Math.random() * (180 - 30)) + 30
       }/500/300`;
     },
-    /*
+
     formatDate(date) {
-      return date.split("").reverse().join("").toString().replaceAll(",", "-");
-    },*/
+      return date.toString().split(",").reverse().join("-");
+    },
 
     formatAirport(iataCode) {
       return getAirportName(iataCode);

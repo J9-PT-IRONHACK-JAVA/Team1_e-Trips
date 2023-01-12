@@ -38,8 +38,6 @@ export default {
   components: [LoginModal],
   setup(props) {
     // setup() receives props as the first argument.
-    console.log(props.id);
-    console.log(props.inBookings);
 
     const showBook = computed(() => {
       return !props.inBookings;
