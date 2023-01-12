@@ -35,7 +35,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.PUT, "/user-management").hasRole("USER")
                 .requestMatchers(HttpMethod.DELETE, "/user-management").hasRole("ADMIN")
                 .anyRequest()
-                .authenticated()
+                .permitAll()
                 .and()
                 .userDetailsService(jpaUserDetailsService)
                 .httpBasic()
