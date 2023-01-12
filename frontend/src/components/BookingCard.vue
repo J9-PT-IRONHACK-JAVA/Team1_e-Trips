@@ -31,11 +31,9 @@ import { computed } from 'vue'; import { computed } from 'vue';
 
 <script>
 import { computed } from "vue";
-import LoginModal from "./LoginModal.vue";
 
 export default {
   props: ["id", "inBookings"],
-  components: [LoginModal],
   setup(props) {
     // setup() receives props as the first argument.
 
