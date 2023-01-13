@@ -13,6 +13,9 @@ import { computed } from 'vue'; import { computed } from 'vue';
         <p class="card_text">
           <slot name="returnDate"></slot>
         </p>
+        <p class="card_text">
+          <slot name="guests"></slot>
+        </p>
         <h2 class="card_title"><slot name="price"></slot></h2>
 
         <button class="btn card_btn" v-show="showBook" @click="action()">

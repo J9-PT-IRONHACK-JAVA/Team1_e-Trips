@@ -1,6 +1,5 @@
 <template>
   <div>
-    <img src="../assets/paotaxidi.png" alt="logo" />
     <div class="wrap">
       <div class="search">
         <input
@@ -26,7 +25,7 @@
         :key="index"
         :id="calcId(index)"
         :inBookings="false"
-        @clickBook="showModal = true"
+        @clickBook="book()"
       >
         <template #image>
           <img :src="src()" />
@@ -50,6 +49,8 @@
 </template>
 
 <script>
+import { store } from "@/store";
+import router from "@/routers";
 import BookingCard from "./BookingCard.vue";
 import LoginModal from "./LoginModal.vue";
 import {
@@ -80,6 +81,14 @@ export default {
   methods: {
     calcId(index) {
       return `id-${index}`;
+    },
+
+    book() {
+      if (store.state.user.id) {
+        router.push({ name: "MyBookings" });
+      } else {
+        this.showModal = true;
+      }
     },
 
     src() {

@@ -1,5 +1,6 @@
 import DashboardView from "./components/DashboardView";
 import MyBookings from "./components/MyBookings";
+import HotelsView from "./components/HotelsView";
 import { createRouter, createWebHashHistory } from "vue-router";
 
 const routes = [
@@ -12,6 +13,11 @@ const routes = [
     name: "MyBookings",
     component: MyBookings,
     path: "/bookings",
+  },
+  {
+    name: "HotelsView",
+    component: HotelsView,
+    path: "/hotels",
   },
 ];
 
