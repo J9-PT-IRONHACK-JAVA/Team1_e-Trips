@@ -28,10 +28,5 @@ public class HotelSearchController {
         return hotelsApiService.getHotelOffers(cityCode, checkInDate, checkOutDate, guests);
     }
 
-    @GetMapping("/test")
-    public String test(){
-        return "Test ok";
-    }
-
 
 }

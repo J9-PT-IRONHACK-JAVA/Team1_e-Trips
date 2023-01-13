@@ -8,8 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.Optional;
 
 @Data
 @Entity
@@ -39,8 +38,11 @@ public class FlightBooking extends Booking{
         this.airline = airline;
         this.numPassengers = numPassengers;
     }
-    public static FlightBooking fromDTO(FlightBookingDTO flightBookingDTO){
+    public static FlightBooking fromDTO(Optional<User> user, FlightBookingDTO flightBookingDTO){
         var flightBooking = new FlightBooking();
+        flightBooking.setUser(user.get());
+        flightBooking.setBookingType(BookingType.FLIGHT);
+        flightBooking.setPrice(flightBookingDTO.getPrice());
         flightBooking.setFlightNumber(flightBookingDTO.getFlightNumber());
         flightBooking.setNumPassengers(flightBookingDTO.getNumPassengers());
         flightBooking.setAirline(flightBookingDTO.getAirline());

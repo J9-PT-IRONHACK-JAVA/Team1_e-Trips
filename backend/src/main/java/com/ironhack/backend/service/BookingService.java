@@ -1,10 +1,13 @@
 package com.ironhack.backend.service;
 
 import com.ironhack.backend.dto.BookingDTO;
+import com.ironhack.backend.dto.FlightBookingDTO;
+import com.ironhack.backend.dto.FlightDTO;
 import com.ironhack.backend.model.Booking;
 import com.ironhack.backend.model.FlightBooking;
 import com.ironhack.backend.model.HotelBooking;
 import com.ironhack.backend.repository.BookingRepository;
+import com.ironhack.backend.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,9 +17,11 @@ import java.util.Optional;
 public class BookingService {
 
     private final BookingRepository bookingRepository;
+    private final UserRepository userRepository;
 
-    public BookingService(BookingRepository bookingRepository) {
+    public BookingService(BookingRepository bookingRepository, UserRepository userRepository) {
         this.bookingRepository = bookingRepository;
+        this.userRepository = userRepository;
     }
 
     public List<Booking> findAll() {
@@ -31,8 +36,15 @@ public class BookingService {
         return bookingRepository.save(hotelbooking);
     }
 
-    public FlightBooking saveFlight(FlightBooking flightbooking) {
-        return bookingRepository.save(flightbooking);
+    public FlightBookingDTO saveFlight(Long userId, FlightDTO flightDTO) {
+// flightDto -> flightBookingDto -> BookingDto/Booking
+// save booking -> flightBookingDto ->
+        var user = userRepository.findById(userId);
+        var returnDto = FlightBookingDTO.fromFlightBooking(bookingRepository
+                .save(FlightBooking.fromDTO(user, FlightBookingDTO.fromFlightDTO(flightDTO))));
+
+//        FlightBookingDTO.fromFlightBooking(bookingService.saveFlight(FlightBooking.fromDTO(FlightBookingDTO.fromFlightDTO(flightDTO))));
+        return returnDto;
     }
 
     public List<Booking> saveAll(List<Booking> listOfBookings) {
@@ -53,4 +65,6 @@ public class BookingService {
 
         return BookingDTO.fromBooking(bookingToUpdate.get());
     }
+
+
 }
