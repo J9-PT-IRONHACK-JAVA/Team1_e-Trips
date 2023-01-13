@@ -20,17 +20,18 @@ public class HotelSearchController {
     private final BookingService bookingService;
 
     @GetMapping
-    List<HotelDTO> findHotelOffers(@RequestParam String cityCode,
-                                   @RequestParam String checkInDate,
-                                   @RequestParam String checkOutDate,
-                                   @RequestParam Integer guests) {
+    List<HotelDTO> findHotelOffers(@RequestParam("cityCode") String cityCode,
+                                   @RequestParam("checkInDate") String checkInDate,
+                                   @RequestParam("checkOutDate") String checkOutDate,
+                                   @RequestParam("guests") Integer guests) {
 
         return hotelsApiService.getHotelOffers(cityCode, checkInDate, checkOutDate, guests);
     }
 
-    @PostMapping
-    HotelBookingDTO saveHotel(@RequestBody HotelDTO hotelDTO) {
-        return HotelBookingDTO.fromHotelBooking(bookingService.saveHotel(HotelBooking.fromDTO(HotelBookingDTO.fromHotelDTO(hotelDTO))));
+    @GetMapping("/test")
+    public String test(){
+        return "Test ok";
     }
+
 
 }
