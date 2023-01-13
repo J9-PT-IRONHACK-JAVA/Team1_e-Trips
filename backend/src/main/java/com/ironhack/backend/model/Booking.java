@@ -29,6 +29,9 @@ public class Booking {
     private BookingType bookingType;
 
     private BigDecimal price;
+    private String name;
+    private String purpose;
+    private Integer travelers;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "booked_by")
@@ -45,6 +48,9 @@ public class Booking {
         booking.setBookingType(bookingDTO.getBookingType());
         booking.setId(bookingDTO.getId());
         booking.setPrice(bookingDTO.getPrice());
+        booking.setName(bookingDTO.getName());
+        booking.setPurpose(bookingDTO.getPurpose());
+        booking.setTravelers(bookingDTO.getTravelers());
         return booking;
     }
 }

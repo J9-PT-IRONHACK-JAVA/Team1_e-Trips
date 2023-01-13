@@ -5,16 +5,17 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
 public class FlightBookingDTO {
     @NotBlank(message = "departure can't be blank")
-    private LocalDateTime departureDateTime;
+    private LocalDate departureDate;
 
     @NotBlank(message = "arrival can't be blank")
-    private LocalDateTime arrivalDateTime;
+    private LocalDate arrivalDate;
 
     @NotBlank(message = "origin can't be blank")
     private String origin;
@@ -31,15 +32,25 @@ public class FlightBookingDTO {
     @NotNull(message = "number of passengers can't be blank")
     private int numPassengers;
 
-    public static FlightBookingDTO fromUser(FlightBooking flightBooking){
+    public static FlightBookingDTO fromFlightBooking(FlightBooking flightBooking){
         var flightBookingDTO = new FlightBookingDTO();
         flightBookingDTO.setFlightNumber(flightBooking.getFlightNumber());
         flightBookingDTO.setAirline(flightBooking.getAirline());
         flightBookingDTO.setOrigin(flightBooking.getOrigin());
         flightBookingDTO.setDestination(flightBooking.getDestination());
         flightBookingDTO.setNumPassengers(flightBooking.getNumPassengers());
-        flightBookingDTO.setArrivalDateTime(flightBooking.getArrivalDateTime());
-        flightBookingDTO.setDepartureDateTime(flightBooking.getDepartureDateTime());
+        flightBookingDTO.setArrivalDate(flightBooking.getArrivalDate());
+        flightBookingDTO.setDepartureDate(flightBooking.getDepartureDate());
         return flightBookingDTO;
     }
+
+    public static FlightBookingDTO fromFlightDTO(FlightDTO flightDTO){
+        var flightBookingDTO = new FlightBookingDTO();
+        flightBookingDTO.setOrigin(flightDTO.getOrigin());
+        flightBookingDTO.setDestination(flightDTO.getDestination());
+        flightBookingDTO.setArrivalDate(flightDTO.getReturnDate());
+        flightBookingDTO.setDepartureDate(flightDTO.getDepartureDate());
+        return flightBookingDTO;
+    }
+
 }

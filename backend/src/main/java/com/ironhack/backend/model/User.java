@@ -3,13 +3,10 @@ package com.ironhack.backend.model;
 import com.ironhack.backend.dto.UserDTO;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Entity
@@ -19,7 +16,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long user_id;
+    private Long userId;
 
     private String username;
     private String password;

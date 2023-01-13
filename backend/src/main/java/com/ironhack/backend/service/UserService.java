@@ -53,9 +53,6 @@ public class UserService {
         return userRepository.save(userToUpdate);
     }
 
-    public void deleteGame(Long id) {
-        userRepository.deleteById(id);
-    }
 
     private User findUserById(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
