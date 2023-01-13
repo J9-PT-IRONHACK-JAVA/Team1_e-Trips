@@ -43,7 +43,14 @@ public class BookingService {
 
 
     public BookingDTO updateBooking(Long bookingId, Optional<String> name, Optional<Integer> travelers, Optional<String> purpose) {
-        //TODO: hacer el patch (SET) de estas 3 properties
-        return null; // BookingDTO.fromBooking(...)
+        var bookingToUpdate = bookingRepository.findById(bookingId);
+
+        name.ifPresent(bookingToUpdate.get()::setName);
+        travelers.ifPresent(bookingToUpdate.get()::setTravelers);
+        purpose.ifPresent(bookingToUpdate.get()::setPurpose);
+
+        bookingRepository.save(bookingToUpdate.get());
+
+        return BookingDTO.fromBooking(bookingToUpdate.get());
     }
 }
