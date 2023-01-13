@@ -37,7 +37,7 @@
         :key="index"
         :id="calcId(index)"
         :inBookings="false"
-        @clickBook="book()"
+        @clickBook="book(item)"
       >
         <template #image>
           <img :src="src()" />
@@ -54,7 +54,11 @@
         <template #price> {{ item.price }} EUR</template>
       </BookingCard>
     </div>
-    <LoginModal v-if="showModal" @close="showModal = false" />
+    <LoginModal
+      v-if="showModal"
+      @close="showModal = false"
+      :booking="booking"
+    />
   </div>
 </template>
 
@@ -64,7 +68,7 @@ import router from "@/routers";
 import BookingCard from "./BookingCard.vue";
 import LoginModal from "./LoginModal.vue";
 import { getHotels } from "../services/HotelService";
-import { getAirportName } from "../utils/AirportCodes";
+import { createHotelBooking } from "../services/MyBookingsService";
 
 export default {
   name: "HotelsView",
@@ -80,9 +84,10 @@ export default {
       showModal: false,
       items: [],
       destination: "MAD",
-      checkInDate: null,
-      checkOutDate: null,
-      guests: null,
+      checkInDate: "2023-01-20",
+      checkOutDate: "2023-01-27",
+      guests: 2,
+      booking: null,
     };
   },
 
@@ -91,10 +96,18 @@ export default {
       return `id-${index}`;
     },
 
-    book() {
-      if (store.state.user.id) {
+    async book(item) {
+      if (store.state.user.email) {
+        await createHotelBooking(
+          item.name,
+          item.checkInDate,
+          item.checkOutDate,
+          item.guests,
+          item.price
+        );
         router.push({ name: "MyBookings" });
       } else {
+        this.booking = item;
         this.showModal = true;
       }
     },
@@ -109,10 +122,6 @@ export default {
       return date.toString().split(",").reverse().join("-");
     },
 
-    formatAirport(iataCode) {
-      return getAirportName(iataCode);
-    },
-
     search() {
       this.getSearchResults(
         this.destination,
@@ -123,19 +132,17 @@ export default {
     },
 
     async getSearchResults(destination, checkInDate, checkOutDate, guests) {
-      if (destination && this.checkInDate && this.checkOutDate && guests) {
-        const response = await getHotels(
-          destination,
-          checkInDate,
-          checkOutDate,
-          guests
-        );
-        this.items = response;
-      }
+      const response = await getHotels(
+        destination,
+        checkInDate,
+        checkOutDate,
+        guests
+      );
+      this.items = response;
     },
   },
   created() {
-    this.getSearchResults("MAD", null);
+    this.getSearchResults("MAD", "2023-01-20", "2023-01-27", 2);
   },
 };
 </script>
@@ -150,7 +157,7 @@ body {
 }
 
 .search {
-  width: 30%;
+  width: 50%;
   position: relative;
   display: flex;
   margin: 4em auto;

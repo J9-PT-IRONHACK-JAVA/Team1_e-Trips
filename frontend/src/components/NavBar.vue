@@ -16,12 +16,16 @@
 
 <script>
 import router from "@/routers";
-import store from "@/store";
+import { store } from "@/store";
+import LoginModal from "./LoginModal.vue";
 
 export default {
   name: "NavBar",
   props: {
     msg: String,
+  },
+  components: {
+    LoginModal,
   },
   data() {
     return {
@@ -33,10 +37,11 @@ export default {
       router.push({ name: "DashboardView" });
     },
     goToHotels() {
-      router.push({ name: "Hotels" });
+      router.push({ name: "HotelsView" });
     },
     goToBookings() {
-      if (store.state.user.id) {
+      console.log(store.state);
+      if (store.state.user.email) {
         router.push({ name: "MyBookings" });
       } else {
         this.showModal = true;
@@ -50,10 +55,10 @@ export default {
 .navbar {
   display: flex;
   justify-content: space-between;
+  margin: 0 5em;
   .right {
     display: flex;
     justify-content: space-around;
-    text-decoration: underline;
     width: 35%;
     font-weight: bold;
     margin-top: 3em;
@@ -61,8 +66,8 @@ export default {
 
   .navItem {
     cursor: pointer;
-    :hover,
-    :active {
+    &:hover,
+    &:active {
       color: dodgerblue;
     }
   }

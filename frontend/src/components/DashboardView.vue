@@ -25,7 +25,7 @@
         :key="index"
         :id="calcId(index)"
         :inBookings="false"
-        @clickBook="book()"
+        @clickBook="book(item)"
       >
         <template #image>
           <img :src="src()" />
@@ -44,7 +44,11 @@
         <template #price> {{ item.price }} EUR</template>
       </BookingCard>
     </div>
-    <LoginModal v-if="showModal" @close="showModal = false" />
+    <LoginModal
+      v-if="showModal"
+      @close="showModal = false"
+      :booking="booking"
+    />
   </div>
 </template>
 
@@ -59,6 +63,7 @@ import {
   getFlightsByDate,
 } from "../services/FlightService";
 import { getAirportName } from "../utils/AirportCodes";
+import { createFlightBooking } from "../services/MyBookingsService";
 
 export default {
   name: "DashboardView",
@@ -75,6 +80,7 @@ export default {
       items: [],
       origin: "MAD",
       date: null,
+      booking: null,
     };
   },
 
@@ -83,10 +89,18 @@ export default {
       return `id-${index}`;
     },
 
-    book() {
-      if (store.state.user.id) {
+    async book(item) {
+      if (store.state.user.email) {
+        await createFlightBooking(
+          item.origin,
+          item.destination,
+          item.departureDate,
+          item.returnDate,
+          item.price
+        );
         router.push({ name: "MyBookings" });
       } else {
+        this.booking = item;
         this.showModal = true;
       }
     },
@@ -138,7 +152,7 @@ body {
 }
 
 .search {
-  width: 30%;
+  width: 40%;
   position: relative;
   display: flex;
   margin: 4em auto;

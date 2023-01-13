@@ -7,7 +7,7 @@ export async function getHotels(
   guests
 ) {
   const response = await axios.get(
-    `/hotel-search/inspire?cityCode=${destination}&checkInDate=${checkInDate}&checkOutDate=${checkOutDate}&guests=${guests}`
+    `/hotel-search?cityCode=${destination}&checkInDate=${checkInDate}&checkOutDate=${checkOutDate}&guests=${guests}`
   );
   return response.data;
 }
