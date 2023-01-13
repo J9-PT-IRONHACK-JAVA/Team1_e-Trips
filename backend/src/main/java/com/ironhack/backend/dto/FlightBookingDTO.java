@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -32,6 +33,9 @@ public class FlightBookingDTO {
     @NotNull(message = "number of passengers can't be blank")
     private int numPassengers;
 
+    @NotNull(message = "price can't be blank")
+    private BigDecimal price;
+
     public static FlightBookingDTO fromFlightBooking(FlightBooking flightBooking){
         var flightBookingDTO = new FlightBookingDTO();
         flightBookingDTO.setFlightNumber(flightBooking.getFlightNumber());
@@ -41,6 +45,7 @@ public class FlightBookingDTO {
         flightBookingDTO.setNumPassengers(flightBooking.getNumPassengers());
         flightBookingDTO.setArrivalDate(flightBooking.getArrivalDate());
         flightBookingDTO.setDepartureDate(flightBooking.getDepartureDate());
+        flightBookingDTO.setPrice(flightBooking.getPrice());
         return flightBookingDTO;
     }
 
@@ -50,6 +55,8 @@ public class FlightBookingDTO {
         flightBookingDTO.setDestination(flightDTO.getDestination());
         flightBookingDTO.setArrivalDate(flightDTO.getReturnDate());
         flightBookingDTO.setDepartureDate(flightDTO.getDepartureDate());
+        flightBookingDTO.setPrice(flightDTO.getPrice());
+        flightBookingDTO.setNumPassengers(1);
         return flightBookingDTO;
     }
 
