@@ -7,6 +7,7 @@ import java.util.List;
 
 @Data
 @ToString
-public class InspirationResponse {
-    private List<FlightJson> data;
+public class HotelAvailableOffersJson {
+    private HotelNameJson hotel;
+    private List<HotelOfferJson> offers;
 }

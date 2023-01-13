@@ -24,13 +24,21 @@ public class HotelBookingDTO {
     @NotNull(message = "number of guests date can't be blank")
     private int numGuests;
 
-    public static HotelBookingDTO fromUser(HotelBooking hotelBooking){
+    public static HotelBookingDTO fromHotelBooking(HotelBooking hotelBooking){
         var hotelBookingDTO = new HotelBookingDTO();
         hotelBookingDTO.setArrivalDate(hotelBooking.getArrivalDate());
         hotelBookingDTO.setDepartureDate(hotelBooking.getDepartureDate());
-        hotelBookingDTO.setHotelAddress(hotelBooking.getHotelAddress());
         hotelBookingDTO.setHotelName(hotelBooking.getHotelName());
         hotelBookingDTO.setNumGuests(hotelBooking.getNumGuests());
+        return hotelBookingDTO;
+    }
+
+    public static HotelBookingDTO fromHotelDTO(HotelDTO hotelDTO){
+        var hotelBookingDTO = new HotelBookingDTO();
+        hotelBookingDTO.setArrivalDate(hotelDTO.getCheckInDate());
+        hotelBookingDTO.setDepartureDate(hotelDTO.getCheckOutDate());
+        hotelBookingDTO.setHotelName(hotelDTO.getName());
+        hotelBookingDTO.setNumGuests(hotelDTO.getGuests());
         return hotelBookingDTO;
     }
 }

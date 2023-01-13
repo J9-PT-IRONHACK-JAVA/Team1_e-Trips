@@ -1,22 +1,28 @@
 package com.ironhack.backend.proxy;
 
 import com.ironhack.backend.config.AmadeusFeignClientConfiguration;
+import com.ironhack.backend.dto.amadeusFlightsDTOs.HotelAvailabilityResponse;
+import com.ironhack.backend.dto.amadeusFlightsDTOs.HotelsByCityResponse;
 import com.ironhack.backend.dto.amadeusFlightsDTOs.InspirationResponse;
-import com.nimbusds.oauth2.sdk.TokenResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Optional;
-
-@FeignClient(name = "flightsAmadeus", url = "https://test.api.amadeus.com", configuration = AmadeusFeignClientConfiguration.class)
-public interface FlightsProxy {
+@FeignClient(name = "Amadeus-API", url = "https://test.api.amadeus.com", configuration = AmadeusFeignClientConfiguration.class)
+public interface AmadeusProxy {
 
     @GetMapping("/v1/shopping/flight-destinations")
     InspirationResponse getInspirationFlights(@RequestParam("origin") String origin, @RequestParam("departureDate") String departureDate);
     @GetMapping("/v1/shopping/flight-destinations")
     InspirationResponse getInspirationFlightsOnlyOrigin(@RequestParam("origin") String origin);
+
+    @GetMapping("/v1/reference-data/locations/hotels/by-city")
+    HotelsByCityResponse getHotelsByCityAndRating(@RequestParam("cityCode") String cityCode, @RequestParam("ratings") Integer[] stars);
+    @GetMapping("v3/shopping/hotel-offers")
+    HotelAvailabilityResponse getAvailability(@RequestParam("hotelIds") String[] hotelIdArray,
+                                              @RequestParam("adults") Integer adults,
+                                              @RequestParam("checkInDate") String checkInDate,
+                                              @RequestParam("checkOutDate") String checkOutDate);
 
 
 /*

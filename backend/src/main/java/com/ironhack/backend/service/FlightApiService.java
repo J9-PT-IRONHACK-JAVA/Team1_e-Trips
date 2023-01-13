@@ -3,7 +3,7 @@ package com.ironhack.backend.service;
 import com.ironhack.backend.dto.FlightDTO;
 import com.ironhack.backend.dto.amadeusFlightsDTOs.FlightJson;
 import com.ironhack.backend.dto.amadeusFlightsDTOs.InspirationResponse;
-import com.ironhack.backend.proxy.FlightsProxy;
+import com.ironhack.backend.proxy.AmadeusProxy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,22 +11,21 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class FlightApiService {
 
-    private final FlightsProxy flightsProxy;
+    private final AmadeusProxy amadeusProxy;
 
     public List<FlightDTO> getFlightsByOriginAndDate(String origin, String departureDate){
-        var response = flightsProxy.getInspirationFlights(origin, departureDate);
+        var response = amadeusProxy.getInspirationFlights(origin, departureDate);
 
         return convertFlightDTOListFromProxyResponse(response);
     }
 
     public List<FlightDTO> getFlightsByOrigin(String origin){
-        var response = flightsProxy.getInspirationFlightsOnlyOrigin(origin);
+        var response = amadeusProxy.getInspirationFlightsOnlyOrigin(origin);
 
         return convertFlightDTOListFromProxyResponse(response);
     }

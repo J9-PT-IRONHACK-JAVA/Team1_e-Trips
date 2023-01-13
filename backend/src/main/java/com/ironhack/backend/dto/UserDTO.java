@@ -22,7 +22,7 @@ public class UserDTO {
 
     public static UserDTO fromUser(User user){
         var userDTO = new UserDTO();
-        userDTO.setUser_id(user.getUser_id());
+        userDTO.setUser_id(user.getUserId());
         userDTO.setUsername(user.getUsername());
         userDTO.setEmail(user.getEmail());
         userDTO.setPassword(user.getPassword());
