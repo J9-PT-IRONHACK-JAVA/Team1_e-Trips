@@ -45,7 +45,7 @@ public class User {
         user.setUsername(userDTO.getUsername());
         user.setPassword(userDTO.getPassword());
         user.setEmail(userDTO.getEmail());
-        user.setRoles(userDTO.getRoles());
+        user.setRoles("ROLE_USER");
         return user;
     }
 

@@ -25,6 +25,9 @@
 
 <script>
 import BookingCard from "./BookingCard.vue";
+import {} from "../services/FlightService";
+//import { store } from "@/store";
+
 export default {
   name: "MyBookings",
   components: {
@@ -35,66 +38,19 @@ export default {
   },
   data() {
     return {
-      items: [
-        {
-          index: 1,
-          destination: "New York",
-          departureDate: "03/03/2023",
-          returnDate: "23/03/2023",
-          price: "397EUR",
-        },
-        {
-          index: 2,
-          destination: "Madrid",
-          departureDate: "03/03/2023",
-          returnDate: "23/03/2023",
-          price: "37EUR",
-        },
-        {
-          index: 3,
-          destination: "London",
-          departureDate: "03/03/2023",
-          returnDate: "23/03/2023",
-          price: "37EUR",
-        },
-        {
-          index: 4,
-          destination: "Athens",
-          departureDate: "03/03/2023",
-          returnDate: "23/03/2023",
-          price: "97EUR",
-        },
-        {
-          index: 5,
-          destination: "Valencia",
-          departureDate: "03/03/2023",
-          returnDate: "23/03/2023",
-          price: "97EUR",
-        },
-        {
-          index: 6,
-          destination: "Mykonos",
-          departureDate: "03/03/2023",
-          returnDate: "23/03/2023",
-          price: "97EUR",
-        },
-        {
-          index: 7,
-          destination: "Rome",
-          departureDate: "03/03/2023",
-          returnDate: "23/03/2023",
-          price: "97EUR",
-        },
-        {
-          index: 8,
-          destination: "Paris",
-          departureDate: "03/03/2023",
-          returnDate: "23/03/2023",
-          price: "97EUR",
-        },
-      ],
+      items: [],
     };
   },
+  methods: {
+    //TO DO: Add once endpoint is ready
+    //  async getMyBookings() {
+    //const response = await getBookings(store.state.user.id);
+    //this.items = response;
+    // },
+  },
+  // created() {
+  //   this.getSearchResults("MAD", null);
+  // },
 };
 </script>
 

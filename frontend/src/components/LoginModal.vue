@@ -5,6 +5,10 @@
       <h2>Login</h2>
       <form>
         <div class="user-box">
+          <input type="email" v-model="email" name="" required />
+          <label>Email</label>
+        </div>
+        <div class="user-box">
           <input type="text" v-model="name" name="" required />
           <label>Username</label>
         </div>
@@ -12,7 +16,7 @@
           <input type="password" v-model="password" name="" required />
           <label>Password</label>
         </div>
-        <a @click="$emit('close')">
+        <a @click="action">
           <span></span>
           <span></span>
           <span></span>
@@ -26,20 +30,34 @@
 
 <script>
 import { ref } from "vue";
+import { createUser } from "../services/UserService";
+import { store } from "@/store";
+import router from "@/routers";
 
 export default {
-  setup(props) {
+  emits: ["close"],
+
+  setup(props, { emit }) {
     const name = ref("");
     const password = ref("");
-    const signin = () => {
-      //post user
-      return props.id;
+    const email = ref("");
+
+    const action = async () => {
+      const response = await createUser(
+        email.value,
+        name.value,
+        password.value
+      );
+      store.commit("SET_USER", response);
+      emit("close");
+      router.push({ name: "MyBookings" });
     };
 
     return {
       name,
       password,
-      signin,
+      email,
+      action,
     };
   },
 };
@@ -56,7 +74,7 @@ body {
   background: linear-gradient(#141e30, #243b55);
 }
 .modal-container {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   height: 100vh;

@@ -34,7 +34,8 @@ import { computed } from "vue";
 
 export default {
   props: ["id", "inBookings"],
-  setup(props) {
+  emits: ["clickBook"],
+  setup(props, { emit }) {
     // setup() receives props as the first argument.
 
     const showBook = computed(() => {
@@ -46,8 +47,7 @@ export default {
     });
 
     const action = () => {
-      //if logged in post with id and route to bookings pages
-      //if not logged in open modal by using emit to dashboard
+      emit("clickBook");
       return props.id;
     };
     const edit = () => {
