@@ -32,9 +32,4 @@ public class FlightSearchController {
         } else return flightApiService.getFlightsByOrigin(origin);
     }
 
-    @PostMapping
-    FlightBookingDTO saveFlight(@RequestBody FlightDTO flightDTO) {
-        return FlightBookingDTO.fromFlightBooking(bookingService.saveFlight(FlightBooking.fromDTO(FlightBookingDTO.fromFlightDTO(flightDTO))));
-    }
-
 }
