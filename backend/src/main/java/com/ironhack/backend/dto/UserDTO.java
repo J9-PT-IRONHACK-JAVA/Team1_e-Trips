@@ -4,7 +4,9 @@ import com.ironhack.backend.model.User;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @Data
 public class UserDTO {
     private Long user_id;
@@ -26,5 +28,11 @@ public class UserDTO {
         userDTO.setPassword(user.getPassword());
         userDTO.setRoles(user.getRoles());
         return userDTO;
+    }
+
+    public UserDTO(String username, String password, String email) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
     }
 }

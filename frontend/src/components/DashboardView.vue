@@ -26,6 +26,7 @@
         :key="index"
         :id="calcId(index)"
         :inBookings="false"
+        @clickBook="showModal = true"
       >
         <template #image>
           <img :src="src()" />

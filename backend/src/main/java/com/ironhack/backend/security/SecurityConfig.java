@@ -29,7 +29,6 @@ public class SecurityConfig {
         return http
                 .csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/public").permitAll()
                 .requestMatchers(HttpMethod.GET, "/user-management").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/user-management").permitAll()
                 .requestMatchers(HttpMethod.PUT, "/user-management").hasRole("USER")
