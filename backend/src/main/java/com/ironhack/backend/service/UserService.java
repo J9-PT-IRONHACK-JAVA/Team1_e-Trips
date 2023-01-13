@@ -6,6 +6,7 @@ import com.ironhack.backend.model.User;
 import com.ironhack.backend.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,20 +19,35 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public List<User> findAll() {
-        return userRepository.findAll();
+    public List<UserDTO> findAll() {
+        var userList = userRepository.findAll();
+        var userDtoList = new ArrayList<UserDTO>();
+
+        for (User u : userList){
+            var userDto = UserDTO.fromUser(u);
+            userDtoList.add(userDto);
+        }
+
+        return userDtoList;
     }
 
     public Optional<User> findById(long selectedId) {
         return userRepository.findById(selectedId);
     }
 
+    private User findUserById(Long id) {
+        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+    }
+
     public Optional<User> findByNameIgnoreCase(String name) {
         return userRepository.findByUsernameIgnoreCase(name);
     }
 
-    public User save(User user) {
-        return userRepository.save(user);
+    public UserDTO save(UserDTO userDTO) {
+        var userToSave = User.fromDTO(userDTO);
+        var userDtoReturn = UserDTO.fromUser(userRepository.save(userToSave));
+
+        return userDtoReturn;
     }
 
     public List<User> saveAll(List<User> listOfUsers) {
@@ -44,19 +60,22 @@ public class UserService {
         return UserDTO.fromUser(userCreated);
     }
 
-    public User updateUser(Long id, User user) {
+    public User updateUser(Long id,
+                           Optional<String> userName,
+                           Optional<String> password,
+                           Optional<String> email,
+                           Optional<String> roles) {
+
         var userToUpdate = findUserById(id);
-        userToUpdate.setUsername(user.getUsername());
-        userToUpdate.setPassword(user.getPassword());
-        userToUpdate.setEmail(user.getEmail());
-        userToUpdate.setRoles(user.getRoles());
+
+        userName.ifPresent(userToUpdate::setUsername);
+        password.ifPresent(userToUpdate::setPassword);
+        email.ifPresent(userToUpdate::setEmail);
+        roles.ifPresent(userToUpdate::setRoles);
+
         return userRepository.save(userToUpdate);
     }
 
-
-    private User findUserById(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
-    }
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }

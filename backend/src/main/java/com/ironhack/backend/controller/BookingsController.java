@@ -1,7 +1,9 @@
 package com.ironhack.backend.controller;
 
-import com.ironhack.backend.dto.BookingDTO;
+import com.ironhack.backend.dto.*;
 import com.ironhack.backend.model.Booking;
+import com.ironhack.backend.model.FlightBooking;
+import com.ironhack.backend.model.HotelBooking;
 import com.ironhack.backend.service.BookingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,14 +20,25 @@ public class BookingsController {
 
     private final BookingService bookingService;
 
-    @GetMapping("/{id}")
-    public List<BookingDTO> getUserBookings(@PathVariable Long id){
-        var userBookings = bookingService.findAllByUser(id);
+    @GetMapping("/{userId}")
+    public List<BookingDTO> getUserBookings(@PathVariable Long userId){
+        var userBookings = bookingService.findAllByUser(userId);
         List<BookingDTO> userBookingsDTO = new ArrayList<>();
         for (Booking booking : userBookings){
             userBookingsDTO.add(BookingDTO.fromBooking(booking));
         }
         return userBookingsDTO;
+    }
+
+    @PostMapping("/save-flight")
+    FlightBookingDTO saveFlight(@RequestParam("userId") Long userId,
+                                @RequestBody FlightDTO flightDTO) {
+        return bookingService.saveFlight(userId, flightDTO);
+    }
+
+    @PostMapping("/save-hotel")
+    HotelBookingDTO saveHotel(@RequestBody HotelDTO hotelDTO) {
+        return HotelBookingDTO.fromHotelBooking(bookingService.saveHotel(HotelBooking.fromDTO(HotelBookingDTO.fromHotelDTO(hotelDTO))));
     }
 
     @PatchMapping("/{bookingId}")
@@ -38,8 +51,9 @@ public class BookingsController {
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.OK)
-    public void deleteBooking(@RequestParam("role") String userRole, @RequestParam("booking") String bookingId){
-        //incorporar validación de ROLE_ADMIN
+    public void deleteBooking(@RequestParam("role") String userRole,
+                              @RequestParam("booking") String bookingId){
+        //incorporar validación de ROLE_ADMIN --> (D) lo puse en scurity chain como request USER, no sé si haga falta validarlo aquí
         bookingService.delete(Long.valueOf(bookingId));
     }
 
