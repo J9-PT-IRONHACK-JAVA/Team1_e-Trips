@@ -33,9 +33,18 @@ import { ref } from "vue";
 import { createUser } from "../services/UserService";
 import { store } from "@/store";
 import router from "@/routers";
+import {
+  createHotelBooking,
+  createFlightBooking,
+} from "../services/MyBookingsService";
 
 export default {
   emits: ["close"],
+  props: {
+    booking: {
+      default: null,
+    },
+  },
 
   setup(props, { emit }) {
     const name = ref("");
@@ -48,9 +57,26 @@ export default {
         name.value,
         password.value
       );
-      store.commit("SET_USER", response);
       emit("close");
       router.push({ name: "MyBookings" });
+      store.commit("SET_USER", response);
+      if (props.booking.origin) {
+        await createFlightBooking(
+          props.booking.origin,
+          props.booking.destination,
+          props.booking.departureDate,
+          props.booking.returnDate,
+          props.booking.price
+        );
+      } else if (props.booking.guests) {
+        await createHotelBooking(
+          props.booking.name,
+          props.booking.checkInDate,
+          props.booking.checkOutDate,
+          props.booking.guests,
+          props.booking.price
+        );
+      }
     };
 
     return {

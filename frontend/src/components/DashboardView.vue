@@ -1,6 +1,5 @@
 <template>
   <div>
-    <img src="../assets/paotaxidi.png" alt="logo" />
     <div class="wrap">
       <div class="search">
         <input
@@ -26,7 +25,7 @@
         :key="index"
         :id="calcId(index)"
         :inBookings="false"
-        @clickBook="showModal = true"
+        @clickBook="book(item)"
       >
         <template #image>
           <img :src="src()" />
@@ -45,11 +44,17 @@
         <template #price> {{ item.price }} EUR</template>
       </BookingCard>
     </div>
-    <LoginModal v-if="showModal" @close="showModal = false" />
+    <LoginModal
+      v-if="showModal"
+      @close="showModal = false"
+      :booking="booking"
+    />
   </div>
 </template>
 
 <script>
+import { store } from "@/store";
+import router from "@/routers";
 import BookingCard from "./BookingCard.vue";
 import LoginModal from "./LoginModal.vue";
 import {
@@ -58,6 +63,7 @@ import {
   getFlightsByDate,
 } from "../services/FlightService";
 import { getAirportName } from "../utils/AirportCodes";
+import { createFlightBooking } from "../services/MyBookingsService";
 
 export default {
   name: "DashboardView",
@@ -72,14 +78,31 @@ export default {
     return {
       showModal: false,
       items: [],
-      origin: "MAD",
+      origin: "LON",
       date: null,
+      booking: null,
     };
   },
 
   methods: {
     calcId(index) {
       return `id-${index}`;
+    },
+
+    async book(item) {
+      if (store.state.user.email) {
+        await createFlightBooking(
+          item.origin,
+          item.destination,
+          item.departureDate,
+          item.returnDate,
+          item.price
+        );
+        router.push({ name: "MyBookings" });
+      } else {
+        this.booking = item;
+        this.showModal = true;
+      }
     },
 
     src() {
@@ -114,7 +137,7 @@ export default {
     },
   },
   created() {
-    this.getSearchResults("MAD", null);
+    this.getSearchResults("LON", null);
   },
 };
 </script>
@@ -129,7 +152,7 @@ body {
 }
 
 .search {
-  width: 30%;
+  width: 40%;
   position: relative;
   display: flex;
   margin: 4em auto;

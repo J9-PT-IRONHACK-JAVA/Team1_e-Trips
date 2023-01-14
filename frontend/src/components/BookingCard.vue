@@ -6,6 +6,7 @@ import { computed } from 'vue'; import { computed } from 'vue';
         <slot name="image"></slot>
       </div>
       <div class="card_content">
+        <h2 class="card_title"><slot name="origin"></slot></h2>
         <h2 class="card_title"><slot name="destination"></slot></h2>
         <p class="card_text">
           <slot name="departureDate"></slot>
@@ -13,16 +14,19 @@ import { computed } from 'vue'; import { computed } from 'vue';
         <p class="card_text">
           <slot name="returnDate"></slot>
         </p>
+        <p class="card_text">
+          <slot name="guests"></slot>
+        </p>
         <h2 class="card_title"><slot name="price"></slot></h2>
 
         <button class="btn card_btn" v-show="showBook" @click="action()">
           Book
         </button>
         <button class="btn card_btn" v-show="showEdit" @click="edit()">
-          Edit
+          Edit booking
         </button>
         <button class="btn card_btn" v-show="showEdit" @click="erase()">
-          Delete
+          Cancel booking
         </button>
       </div>
     </div>
@@ -34,7 +38,7 @@ import { computed } from "vue";
 
 export default {
   props: ["id", "inBookings"],
-  emits: ["clickBook"],
+  emits: ["clickBook", "deleteBooking"],
   setup(props, { emit }) {
     // setup() receives props as the first argument.
 
@@ -48,16 +52,17 @@ export default {
 
     const action = () => {
       emit("clickBook");
+
       return props.id;
     };
     const edit = () => {
       //if logged in as admin patch
       return props.id;
     };
-    const erase = () => {
-      //delete
-      return props.id;
+    const erase = async () => {
+      emit("deleteBooking");
     };
+
     return {
       showEdit,
       showBook,

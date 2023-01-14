@@ -1,12 +1,12 @@
 <template>
-  <img src="../assets/paotaxidi.png" alt="logo" />
   <h1>My trips</h1>
-  <div class="card-container">
+  <div class="card-container" :key="componentKey">
     <BookingCard
       v-for="(item, index) in items"
       :key="index"
       :id="index"
       :inBookings="true"
+      @deleteBooking="deleteBooking(item)"
     >
       <template #image>
         <img
@@ -15,10 +15,10 @@
           }/500/300`"
         />
       </template>
-      <template #destination> {{ item.destination }}</template>
-      <template #departureDate> {{ item.departureDate }} </template>
-      <template #returnDate> {{ item.returnDate }}</template>
-      <template #price> {{ item.price }}</template>
+      <template #destination> {{ item }}</template>
+      <template #departureDate> {{ item }} </template>
+      <template #returnDate> {{ item }}</template>
+      <template #price> {{ item }}</template>
     </BookingCard>
   </div>
 </template>
@@ -26,7 +26,8 @@
 <script>
 import BookingCard from "./BookingCard.vue";
 import {} from "../services/FlightService";
-//import { store } from "@/store";
+import { store } from "@/store";
+import { cancelBooking, getBookings } from "../services/MyBookingsService";
 
 export default {
   name: "MyBookings",
@@ -39,18 +40,28 @@ export default {
   data() {
     return {
       items: [],
+      componentKey: 0,
     };
   },
   methods: {
-    //TO DO: Add once endpoint is ready
-    //  async getMyBookings() {
-    //const response = await getBookings(store.state.user.id);
-    //this.items = response;
-    // },
+    forceRerender() {
+      this.componentKey += 1;
+    },
+
+    async getBookings() {
+      console.log(store.state.user);
+      const response = await getBookings(store.state.user.user_id);
+      this.items = response;
+    },
+
+    async deleteBooking(item) {
+      await cancelBooking(item.id);
+      this.forceRerender();
+    },
   },
-  // created() {
-  //   this.getSearchResults("MAD", null);
-  // },
+  created() {
+    this.getBookings();
+  },
 };
 </script>
 

@@ -1,7 +1,6 @@
 package com.ironhack.backend.service;
 
 import com.ironhack.backend.dto.*;
-import com.ironhack.backend.enums.BookingType;
 import com.ironhack.backend.model.Booking;
 import com.ironhack.backend.model.FlightBooking;
 import com.ironhack.backend.model.HotelBooking;
@@ -33,8 +32,6 @@ public class BookingService {
 
     public HotelBookingDTO saveHotel(Long userId, HotelDTO hotelDTO) {
         var user = userRepository.findById(userId);
-
-
         return HotelBookingDTO.fromHotelBooking(bookingRepository
                 .save(HotelBooking.fromDTO(user, HotelBookingDTO.fromHotelDTO(hotelDTO))));
     }
