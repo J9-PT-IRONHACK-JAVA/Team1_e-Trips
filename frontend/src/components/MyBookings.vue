@@ -2,11 +2,11 @@
   <h1>My trips</h1>
   <div class="card-container" :key="componentKey">
     <BookingCard
-      v-for="(item, index) in items"
+      v-for="(flight, index) in flights"
       :key="index"
       :id="index"
       :inBookings="true"
-      @deleteBooking="deleteBooking(item)"
+      @deleteBooking="deleteBooking(flight)"
     >
       <template #image>
         <img
@@ -15,11 +15,37 @@
           }/500/300`"
         />
       </template>
-      <template #destination> {{ item }}</template>
-      <template #departureDate> {{ item }} </template>
-      <template #returnDate> {{ item }}</template>
-      <template #price> {{ item }}</template>
+      <template #destination>
+        {{ formatAirport(flight.origin) }} -
+        {{ formatAirport(flight.destination) }}
+      </template>
+      <template #departureDate>
+        Departure: {{ formatDate(flight.departureDate) }}
+      </template>
+      <template #returnDate>
+        Return: {{ formatDate(flight.arrivalDate) }}</template
+      >
+      <template #price> Price: {{ flight.price }} EUR</template>
     </BookingCard>
+    <!--<BookingCard
+      v-for="(hotel, index) in hotels"
+      :key="index"
+      :id="index"
+      :inBookings="true"
+      @deleteBooking="deleteBooking(hotel)"
+    >
+      <template #image>
+        <img
+          :src="`https://picsum.photos/id/${
+            index + Math.floor(Math.random() * (180 - 30)) + 30
+          }/500/300`"
+        />
+      </template>
+      <template #destination> {{ hotel }}</template>
+      <template #departureDate> {{ hotel }} </template>
+      <template #returnDate> {{ hotel }}</template>
+      <template #price> {{ hotel }}</template>
+    </BookingCard>-->
   </div>
 </template>
 
@@ -28,6 +54,7 @@ import BookingCard from "./BookingCard.vue";
 import {} from "../services/FlightService";
 import { store } from "@/store";
 import { cancelBooking, getBookings } from "../services/MyBookingsService";
+import { getAirportName } from "../utils/AirportCodes";
 
 export default {
   name: "MyBookings",
@@ -39,11 +66,19 @@ export default {
   },
   data() {
     return {
-      items: [],
+      flights: [],
+      hotels: [],
       componentKey: 0,
     };
   },
   methods: {
+    formatDate(date) {
+      return date.toString().split(",").reverse().join("-");
+    },
+    formatAirport(iataCode) {
+      return getAirportName(iataCode);
+    },
+
     forceRerender() {
       this.componentKey += 1;
     },
@@ -51,7 +86,8 @@ export default {
     async getBookings() {
       console.log(store.state.user);
       const response = await getBookings(store.state.user.user_id);
-      this.items = response;
+      this.flights = response.flights;
+      this.hotels = response.hotels;
     },
 
     async deleteBooking(item) {
