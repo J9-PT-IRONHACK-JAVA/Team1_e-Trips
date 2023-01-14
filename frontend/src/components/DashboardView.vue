@@ -78,11 +78,7 @@ import { store } from "@/store";
 import router from "@/routers";
 import BookingCard from "./BookingCard.vue";
 import LoginModal from "./LoginModal.vue";
-import {
-  getFlights,
-  getFlightsByOrigin,
-  getFlightsByDate,
-} from "../services/FlightService";
+import { getFlights } from "../services/FlightService";
 import { getAirportName } from "../utils/AirportCodes";
 import { createFlightBooking } from "../services/MyBookingsService";
 
@@ -98,11 +94,32 @@ export default {
   data() {
     return {
       showModal: false,
-      items: [],
-      origin: "LON",
-      date: null,
-      booking: null,
-      loading: true,
+      items: [
+        {
+          id: 1,
+          origin: "MAD",
+          destination: "LON",
+          departureDate: [2023, 2, 10],
+          returnDate: [2023, 2, 13],
+          price: 128.5,
+        },
+        {
+          id: 2,
+          origin: "MAD",
+          destination: "NYC",
+          departureDate: [2023, 2, 18],
+          returnDate: [2023, 2, 22],
+          price: 750.25,
+        },
+        {
+          id: 3,
+          origin: "MAD",
+          destination: "BOS",
+          departureDate: [2023, 3, 6],
+          returnDate: [2023, 2, 22],
+          price: 326.0,
+        },
+      ],
     };
   },
 
@@ -112,6 +129,7 @@ export default {
     },
 
     async book(item) {
+      console.log(item, store.state.user.email);
       if (store.state.user.email) {
         await createFlightBooking(
           item.origin,
@@ -123,7 +141,7 @@ export default {
         router.push({ name: "MyBookings" });
       } else {
         this.booking = item;
-        this.showModal = false;
+        this.showModal = true;
       }
     },
 
@@ -147,6 +165,9 @@ export default {
     },
 
     async getSearchResults(origin, departureDate) {
+      await getFlights(origin, departureDate);
+      this.loading = false;
+      /*
       if (origin && departureDate) {
         const response = await getFlights(origin, departureDate);
         this.items = response;
@@ -156,11 +177,11 @@ export default {
       } else if (origin) {
         const response = await getFlightsByOrigin(origin);
         this.items = response;
-      }
+      }*/
     },
   },
   created() {
-    this.getSearchResults("LON", null);
+    this.getSearchResults("LON", "2023-10-23");
   },
 };
 </script>

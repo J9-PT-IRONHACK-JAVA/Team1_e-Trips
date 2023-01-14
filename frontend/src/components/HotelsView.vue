@@ -74,7 +74,7 @@ import { store } from "@/store";
 import router from "@/routers";
 import BookingCard from "./BookingCard.vue";
 import LoginModal from "./LoginModal.vue";
-import { getHotels } from "../services/HotelService";
+import { getFlights } from "../services/FlightService";
 import { createHotelBooking } from "../services/MyBookingsService";
 
 export default {
@@ -89,11 +89,30 @@ export default {
   data() {
     return {
       showModal: false,
-      items: [],
-      destination: "LON",
-      checkInDate: "2023-01-20",
-      checkOutDate: "2023-01-27",
-      guests: 2,
+      items: [
+        {
+          name: "Hilton",
+          checkInDate: [2023, 2, 10],
+          checkOutDate: [2023, 2, 13],
+          guests: 1,
+          price: 128.5,
+        },
+        {
+          name: "4 Seasons",
+          checkInDate: [2023, 2, 18],
+          returnDate: [2023, 2, 22],
+          guests: 1,
+          price: 750.25,
+        },
+        {
+          name: "Villa",
+          checkInDate: [2023, 3, 6],
+          checkOutDate: [2023, 2, 22],
+          guests: 1,
+          price: 326.0,
+        },
+      ],
+
       booking: null,
       loading: true,
     };
@@ -139,19 +158,19 @@ export default {
       );
       this.loading = false;
     },
-
+    /*
     async getSearchResults(destination, checkInDate, checkOutDate, guests) {
-      const response = await getHotels(
-        destination,
-        checkInDate,
-        checkOutDate,
-        guests
-      );
-      this.items = response;
+      await getHotels(destination, checkInDate, checkOutDate, guests);
+      // this.items = response;
+    },*/
+
+    async getSearchResults(origin, departureDate) {
+      await getFlights(origin, departureDate);
+      this.loading = false;
     },
   },
   created() {
-    this.getSearchResults("LON", "2023-01-20", "2023-01-27", 2);
+    this.getSearchResults("LON", "2023-10-23");
   },
 };
 </script>
