@@ -43,6 +43,14 @@ public class Booking {
         this.user = user;
         this.price = price;
     }
+
+    public Booking(Long id, BookingType bookingType, User user, BigDecimal price, Integer travellers) {
+        this.id = id;
+        this.bookingType = bookingType;
+        this.user = user;
+        this.price = price;
+        this.travelers = travellers;
+    }
     public static Booking fromDTO(BookingDTO bookingDTO){
         var booking = new Booking();
         booking.setBookingType(bookingDTO.getBookingType());

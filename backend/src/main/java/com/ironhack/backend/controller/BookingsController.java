@@ -35,12 +35,13 @@ public class BookingsController {
                                 @RequestBody FlightDTO flightDTO) {
 
         return bookingService.saveFlight(userId, flightDTO);
-        // return FlightBookingDTO.fromFlightBooking(bookingService.saveFlight(FlightBooking.fromDTO(FlightBookingDTO.fromFlightDTO(flightDTO))));
     }
 
     @PostMapping("/save-hotel")
-    HotelBookingDTO saveHotel(@RequestBody HotelDTO hotelDTO) {
-        return HotelBookingDTO.fromHotelBooking(bookingService.saveHotel(HotelBooking.fromDTO(HotelBookingDTO.fromHotelDTO(hotelDTO))));
+    HotelBookingDTO saveHotel(@RequestParam("userId") Long userId,
+                              @RequestBody HotelDTO hotelDTO) {
+        return bookingService.saveHotel(userId, hotelDTO);
+//        return HotelBookingDTO.fromHotelBooking(bookingService.saveHotel(HotelBooking.fromDTO(HotelBookingDTO.fromHotelDTO(hotelDTO))));
     }
 
     @PatchMapping("/{bookingId}")
