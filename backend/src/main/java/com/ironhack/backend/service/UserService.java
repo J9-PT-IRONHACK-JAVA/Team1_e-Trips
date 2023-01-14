@@ -45,9 +45,8 @@ public class UserService {
 
     public UserDTO save(UserDTO userDTO) {
         var userToSave = User.fromDTO(userDTO);
-        var userDtoReturn = UserDTO.fromUser(userRepository.save(userToSave));
 
-        return userDtoReturn;
+        return UserDTO.fromUser(userRepository.save(userToSave));
     }
 
     public List<User> saveAll(List<User> listOfUsers) {
@@ -60,7 +59,7 @@ public class UserService {
         return UserDTO.fromUser(userCreated);
     }
 
-    public User updateUser(Long id,
+    public UserDTO updateUser(Long id,
                            Optional<String> userName,
                            Optional<String> password,
                            Optional<String> email,
@@ -73,7 +72,7 @@ public class UserService {
         email.ifPresent(userToUpdate::setEmail);
         roles.ifPresent(userToUpdate::setRoles);
 
-        return userRepository.save(userToUpdate);
+        return UserDTO.fromUser(userRepository.save(userToUpdate));
     }
 
     public void deleteUser(Long id) {
@@ -81,4 +80,16 @@ public class UserService {
     }
 
 
+    public UserDTO updateFullUser(Long id, UserDTO user) {
+        var userToUpdate = findUserById(id);
+
+        userToUpdate.setUsername(user.getUsername());
+        userToUpdate.setPassword(user.getPassword());
+        userToUpdate.setEmail(user.getEmail());
+        userToUpdate.setRoles(user.getRoles());
+
+        userRepository.save(userToUpdate);
+
+        return UserDTO.fromUser(userToUpdate);
+    }
 }
