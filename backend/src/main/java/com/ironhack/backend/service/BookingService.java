@@ -34,16 +34,13 @@ public class BookingService {
         var user = userRepository.findById(userId);
         return HotelBookingDTO.fromHotelBooking(bookingRepository
                 .save(HotelBooking.fromDTO(user, HotelBookingDTO.fromHotelDTO(hotelDTO))));
-
     }
 
     public FlightBookingDTO saveFlight(Long userId, FlightDTO flightDTO) {
         var user = userRepository.findById(userId);
-        var returnDto = FlightBookingDTO.fromFlightBooking(bookingRepository
-                .save(FlightBooking.fromDTO(user, FlightBookingDTO.fromFlightDTO(flightDTO))));
 
-//        FlightBookingDTO.fromFlightBooking(bookingService.saveFlight(FlightBooking.fromDTO(FlightBookingDTO.fromFlightDTO(flightDTO))));
-        return returnDto;
+        return FlightBookingDTO.fromFlightBooking(bookingRepository
+                .save(FlightBooking.fromDTO(user, FlightBookingDTO.fromFlightDTO(flightDTO))));
     }
 
     public List<Booking> saveAll(List<Booking> listOfBookings) {
@@ -55,6 +52,7 @@ public class BookingService {
 
     public BookingDTO updateBooking(Long bookingId, Optional<String> name, Optional<Integer> travelers, Optional<String> purpose) {
         var bookingToUpdate = bookingRepository.findById(bookingId);
+        var bookingType = bookingToUpdate.get().getBookingType();
 
         name.ifPresent(bookingToUpdate.get()::setName);
         travelers.ifPresent(bookingToUpdate.get()::setTravelers);

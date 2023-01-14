@@ -33,12 +33,14 @@ public class HotelBooking extends Booking {
         this.numGuests = numGuests;
     }
 
-    public static HotelBooking fromDTO(HotelBookingDTO hotelBookingDTO){
+    public static HotelBooking fromDTO(Optional<User> user, HotelBookingDTO hotelBookingDTO){
         var hotelBooking = new HotelBooking();
+        hotelBooking.setUser(user.get());
         hotelBooking.setArrivalDate(hotelBookingDTO.getArrivalDate());
         hotelBooking.setDepartureDate(hotelBookingDTO.getDepartureDate());
         hotelBooking.setHotelName(hotelBookingDTO.getHotelName());
         hotelBooking.setNumGuests(hotelBookingDTO.getNumGuests());
+        hotelBooking.setTravelers(hotelBookingDTO.getNumGuests());
 
         return hotelBooking;
     }

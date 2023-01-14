@@ -28,7 +28,8 @@ public class FlightBooking extends Booking{
 
     private int numPassengers;
 
-    public FlightBooking(Long id, BookingType bookingType, User user, LocalDate departureDate, LocalDate arrivalDate, String origin, String destination, String flightNumber, String airline, int numPassengers, BigDecimal price) {
+    public FlightBooking(Long id, BookingType bookingType, User user, LocalDate departureDate, LocalDate arrivalDate,
+                         String origin, String destination, String flightNumber, String airline, int numPassengers, BigDecimal price) {
         super(id, bookingType, user, price);
         this.departureDate = departureDate;
         this.arrivalDate = arrivalDate;
@@ -45,6 +46,7 @@ public class FlightBooking extends Booking{
         flightBooking.setPrice(flightBookingDTO.getPrice());
         flightBooking.setFlightNumber(flightBookingDTO.getFlightNumber());
         flightBooking.setNumPassengers(flightBookingDTO.getNumPassengers());
+        flightBooking.setTravelers(flightBookingDTO.getNumPassengers());
         flightBooking.setAirline(flightBookingDTO.getAirline());
         flightBooking.setOrigin(flightBookingDTO.getOrigin());
         flightBooking.setDestination(flightBookingDTO.getDestination());

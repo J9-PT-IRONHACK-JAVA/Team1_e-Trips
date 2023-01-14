@@ -1,11 +1,7 @@
 package com.ironhack.backend.controller;
 
-import com.ironhack.backend.dto.FlightBookingDTO;
-import com.ironhack.backend.dto.FlightDTO;
 import com.ironhack.backend.dto.UserDTO;
 import com.ironhack.backend.model.User;
-import com.ironhack.backend.repository.BookingRepository;
-import com.ironhack.backend.repository.UserRepository;
 import com.ironhack.backend.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -36,18 +32,17 @@ public class ManageUsersController {
         return userService.createUser(user);
     }
 
-// (D) comento este put por convertirlo en el patch de abajo, así no hace falta meter todos los campos si no se quiere
-//    @PutMapping("/{id}")
-//    public User updateUser(@PathVariable("id") Long id, @RequestBody User user){
-//        return userService.updateUser(id, user);
-//    }
+    @PutMapping("/{id}")
+    public UserDTO updateFullUser(@PathVariable("id") Long id, @RequestBody UserDTO user){
+        return userService.updateFullUser(id, user);
+    }
 
     @PatchMapping("/update-user-{userId}")
-    public User updateUser(@PathVariable("userId") Long userId,
-                           @RequestParam("user-name") Optional<String> userName,
-                           @RequestParam("user-password") Optional<String> password,
-                           @RequestParam("user-email") Optional<String> email,
-                           @RequestParam("user-roles") Optional<String> roles){
+    public UserDTO updateUser(@PathVariable("userId") Long userId,
+                               @RequestParam("user-name") Optional<String> userName,
+                               @RequestParam("user-password") Optional<String> password,
+                               @RequestParam("user-email") Optional<String> email,
+                               @RequestParam("user-roles") Optional<String> roles){
         return userService.updateUser(userId,userName,password,email,roles);
     }
 
