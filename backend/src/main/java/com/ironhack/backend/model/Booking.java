@@ -51,7 +51,7 @@ public class Booking {
         this.price = price;
         this.travelers = travellers;
     }
-    public static Booking fromDTO(BookingDTO bookingDTO){
+    public static Booking fromBookingDTO(BookingDTO bookingDTO){
         var booking = new Booking();
         booking.setBookingType(bookingDTO.getBookingType());
         booking.setId(bookingDTO.getId());

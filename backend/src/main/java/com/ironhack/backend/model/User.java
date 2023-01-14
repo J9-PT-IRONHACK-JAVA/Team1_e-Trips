@@ -37,7 +37,7 @@ public class User {
         this.roles = roles;
         isAccountNonLocked = true;
     }
-    public static User fromDTO(UserDTO userDTO){
+    public static User fromUserDTO(UserDTO userDTO){
         var user = new User();
         user.setUsername(userDTO.getUsername());
         user.setPassword(userDTO.getPassword());

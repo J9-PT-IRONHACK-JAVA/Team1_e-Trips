@@ -17,5 +17,5 @@ amadeus:
   oauth:
     #client_id: ${AMADEUS.CLIENT.ID}
     #client_secret: ${AMADEUS.CLIENT.SECRET}
-    client_id: Uot14gEXALZgcN3Bg95FW6YeIAGIfoD7
-    client_secret: 4xI9Gcf0U7SlfXIM
+    client_id: j0oGLGaoWwRarmfhKCrAaN7KHTXsdnib
+    client_secret: zSd57SpRYR8QGFAs
