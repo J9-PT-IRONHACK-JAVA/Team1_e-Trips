@@ -39,9 +39,9 @@ public class FlightBooking extends Booking{
         this.airline = airline;
         this.numPassengers = numPassengers;
     }
-    public static FlightBooking fromDTO(Optional<User> user, FlightBookingDTO flightBookingDTO){
+    public static FlightBooking fromFlightBookingDTO(User user, FlightBookingDTO flightBookingDTO){
         var flightBooking = new FlightBooking();
-        flightBooking.setUser(user.get());
+        flightBooking.setUser(user);
         flightBooking.setBookingType(BookingType.FLIGHT);
         flightBooking.setPrice(flightBookingDTO.getPrice());
         flightBooking.setFlightNumber(flightBookingDTO.getFlightNumber());
