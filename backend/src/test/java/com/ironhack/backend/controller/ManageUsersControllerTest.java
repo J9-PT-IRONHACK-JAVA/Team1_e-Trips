@@ -27,9 +27,11 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(ManageUsersController.class)
@@ -76,6 +78,7 @@ class ManageUsersControllerTest {
     void createUser() throws Exception {
 
         UserDTO userDTO = new UserDTO("Iñaki","zdbhzh","iñaki@ironhack.com");
+        userDTO.setRoles("ADMIN");
         when(userService.createUser(userDTO)).thenReturn(userDTO);
 
         mockMvc.perform(post("/user-management")
@@ -89,15 +92,17 @@ class ManageUsersControllerTest {
     @Test
     @WithMockUser(username = "Admin",roles = "ADMIN")
     void updateUser() throws Exception {
-/*
-        var id = 1L;
-        mockMvc.perform(patch("/user-management/update-user-{userId}",id)
-                .param("user-name",)
-                .param()*/
+
+        UserDTO userDTO = new UserDTO("Iñaki","zdbhzh","iñaki@ironhack.com");
+        //when(userService.updateUser(userDTO)).thenReturn(userDTO);
+
+        mockMvc.perform(patch("/user-management/update-user-{userId}",1L)
+                        .param("user-name","Iñaki")
+                        .param("user-password","zdbhzh")
+                        .param("user-email","iñaki@ironhack.com")
+                        .param("user-roles","ADMIN"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.user-name").value("Iñaki"));
+
     }
 
-    @Test
-    @WithMockUser(username = "Admin",roles = "ADMIN")
-    void deleteUser() {
-    }
 }
