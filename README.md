@@ -41,3 +41,5 @@ PATCH /user-management/update-user-{{userId}}
 
 ###
 DELETE /user-management/{{id}}
+
+![Screenshot 2023-01-14 142249](https://user-images.githubusercontent.com/32245254/212477473-a05da771-7bfe-460e-9b56-1dd88acc7b86.png)
