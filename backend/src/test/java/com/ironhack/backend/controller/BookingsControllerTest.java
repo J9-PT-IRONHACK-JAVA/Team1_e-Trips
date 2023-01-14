@@ -10,6 +10,8 @@ import com.ironhack.backend.service.FlightApiService;
 import com.ironhack.backend.service.HotelsApiService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+
+import static org.mockito.Mockito.doNothing;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -28,8 +30,8 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(BookingsController.class)
@@ -60,12 +62,13 @@ class BookingsControllerTest {
         var id = 1L;
         when(bookingService.findAllByUser(id)).thenReturn(bookingList);
 
-        mockMvc.perform(get("/my-bookings/{id}",id).with(httpBasic("user","user")))
+        mockMvc.perform(get("/my-bookings/{id}",id)
+                        .with(httpBasic("admin","admin")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.*", hasSize(2)));
     }
 
     @Test
-    public void updateBooking() {
+    public void updateBooking() throws Exception {
 
         var bookingId=1L;
         var name = "Paquito";
@@ -73,7 +76,10 @@ class BookingsControllerTest {
         var purpose = "Holiday";
         var responseDto = new BookingDTO();
         when(bookingService.updateBooking(bookingId, Optional.of(name), Optional.of(travelers), Optional.of(purpose))).thenReturn(responseDto);
-        mockMvc.perform(patch("/my-bookings//{bookingId}",bookingId,name,travelers,purpose))
+        mockMvc.perform(patch("/my-bookings/{bookingId}",bookingId)
+                .param("name",name)
+                .param("travelers", String.valueOf(travelers))
+                        .param("purpose",purpose))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Paquito"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.purpose").value("Holiday"));
 
@@ -81,6 +87,14 @@ class BookingsControllerTest {
     }
 
     @Test
-    public void deleteBooking() {
+    public void deleteBooking() throws Exception {
+        var testId = 1L;
+        doNothing().when(bookingService).delete(testId);
+        mockMvc.perform(delete("/my-bookings")
+                        .param("role","ADMIN")
+                        .param("booking", "1"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(status().isNoContent());
     }
 }
