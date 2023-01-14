@@ -94,6 +94,7 @@ export default {
   data() {
     return {
       showModal: false,
+      loading: true,
       items: [
         {
           id: 1,
