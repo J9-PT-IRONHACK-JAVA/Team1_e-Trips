@@ -39,8 +39,8 @@ public class BookingsController {
     }
 
     @PostMapping("/save-hotel")
-    HotelBookingDTO saveHotel(@RequestBody HotelDTO hotelDTO) {
-        return HotelBookingDTO.fromHotelBooking(bookingService.saveHotel(HotelBooking.fromDTO(HotelBookingDTO.fromHotelDTO(hotelDTO))));
+    HotelBookingDTO saveHotel(@RequestParam("userId") Long userId,@RequestBody HotelDTO hotelDTO) {
+        return bookingService.saveHotel(userId, hotelDTO);
     }
 
     @PatchMapping("/{bookingId}")
@@ -53,8 +53,7 @@ public class BookingsController {
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.OK)
-    public void deleteBooking(@RequestParam("role") String userRole,
-                              @RequestParam("booking") String bookingId){
+    public void deleteBooking(@RequestParam("booking") String bookingId){
         //incorporar validación de ROLE_ADMIN --> (D) lo puse en scurity chain como request USER, no sé si haga falta validarlo aquí
         bookingService.delete(Long.valueOf(bookingId));
     }

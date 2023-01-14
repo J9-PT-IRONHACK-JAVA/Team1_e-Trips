@@ -1,4 +1,5 @@
 const axios = require("axios");
+import { store } from "@/store";
 
 export async function getBookings(userId) {
   const response = await axios.get(`/my-bookings/${userId}`);
@@ -19,7 +20,10 @@ export async function createFlightBooking(
     returnDate: returnDate,
     price: price,
   };
-  const response = await axios.post(`/flight-search`, payload);
+  const response = await axios.post(
+    `/my-bookings/save-flight?userId=${store.state.user.user_id}`,
+    payload
+  );
   return response.data;
 }
 
@@ -37,6 +41,14 @@ export async function createHotelBooking(
     guests: guests,
     price: price,
   };
-  const response = await axios.post(`/hotel-search`, payload);
+  const response = await axios.post(
+    `/my-bookings/save-flight?userId=${store.state.user.user_id}`,
+    payload
+  );
+  return response.data;
+}
+
+export async function cancelBooking(bookingId) {
+  const response = await axios.delete(`my-bookings?booking=${bookingId}`);
   return response.data;
 }

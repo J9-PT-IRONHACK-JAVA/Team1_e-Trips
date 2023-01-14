@@ -1,11 +1,12 @@
 <template>
   <h1>My trips</h1>
-  <div class="card-container">
+  <div class="card-container" :key="componentKey">
     <BookingCard
       v-for="(item, index) in items"
       :key="index"
       :id="index"
       :inBookings="true"
+      @deleteBooking="deleteBooking(item)"
     >
       <template #image>
         <img
@@ -26,7 +27,7 @@
 import BookingCard from "./BookingCard.vue";
 import {} from "../services/FlightService";
 import { store } from "@/store";
-import { getBookings } from "../services/MyBookingsService";
+import { cancelBooking, getBookings } from "../services/MyBookingsService";
 
 export default {
   name: "MyBookings",
@@ -39,13 +40,23 @@ export default {
   data() {
     return {
       items: [],
+      componentKey: 0,
     };
   },
   methods: {
+    forceRerender() {
+      this.componentKey += 1;
+    },
+
     async getBookings() {
       console.log(store.state.user);
       const response = await getBookings(store.state.user.user_id);
       this.items = response;
+    },
+
+    async deleteBooking(item) {
+      await cancelBooking(item.id);
+      this.forceRerender();
     },
   },
   created() {

@@ -1,5 +1,6 @@
 package com.ironhack.backend.model;
 
+import com.ironhack.backend.dto.FlightBookingDTO;
 import com.ironhack.backend.dto.HotelBookingDTO;
 import com.ironhack.backend.enums.BookingType;
 import jakarta.persistence.Entity;
@@ -10,6 +11,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Optional;
 
 @Data
 @Entity
@@ -38,6 +40,18 @@ public class HotelBooking extends Booking {
         hotelBooking.setHotelName(hotelBookingDTO.getHotelName());
         hotelBooking.setNumGuests(hotelBookingDTO.getNumGuests());
 
+        return hotelBooking;
+    }
+
+    public static HotelBooking fromDTO(Optional<User> user, HotelBookingDTO hotelBookingDTO){
+        var hotelBooking = new HotelBooking();
+        hotelBooking.setUser(user.get());
+        hotelBooking.setBookingType(BookingType.FLIGHT);
+        hotelBooking.setPrice(hotelBookingDTO.getPrice());
+        hotelBooking.setArrivalDate(hotelBookingDTO.getArrivalDate());
+        hotelBooking.setDepartureDate(hotelBookingDTO.getDepartureDate());
+        hotelBooking.setHotelName(hotelBookingDTO.getHotelName());
+        hotelBooking.setNumGuests(hotelBookingDTO.getNumGuests());
         return hotelBooking;
     }
 }

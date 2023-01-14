@@ -83,7 +83,7 @@ export default {
     return {
       showModal: false,
       items: [],
-      destination: "MAD",
+      destination: "LON",
       checkInDate: "2023-01-20",
       checkOutDate: "2023-01-27",
       guests: 2,
@@ -142,7 +142,7 @@ export default {
     },
   },
   created() {
-    this.getSearchResults("MAD", "2023-01-20", "2023-01-27", 2);
+    this.getSearchResults("LON", "2023-01-20", "2023-01-27", 2);
   },
 };
 </script>

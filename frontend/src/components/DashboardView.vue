@@ -78,7 +78,7 @@ export default {
     return {
       showModal: false,
       items: [],
-      origin: "MAD",
+      origin: "LON",
       date: null,
       booking: null,
     };
@@ -137,7 +137,7 @@ export default {
     },
   },
   created() {
-    this.getSearchResults("MAD", null);
+    this.getSearchResults("LON", null);
   },
 };
 </script>

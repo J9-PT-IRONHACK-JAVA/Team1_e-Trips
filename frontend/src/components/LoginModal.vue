@@ -57,6 +57,8 @@ export default {
         name.value,
         password.value
       );
+      emit("close");
+      router.push({ name: "MyBookings" });
       store.commit("SET_USER", response);
       if (props.booking.origin) {
         await createFlightBooking(
@@ -75,8 +77,6 @@ export default {
           props.booking.price
         );
       }
-      emit("close");
-      router.push({ name: "MyBookings" });
     };
 
     return {
