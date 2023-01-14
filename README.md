@@ -3,7 +3,7 @@
 
 #Endpoints generated
 
-###
+### Manage bookings
 GET /my-bookings/{{userId}}
 
 ###
@@ -21,10 +21,10 @@ DELETE /my-bookings
 ### Flight search
 GET /flight-search/inspire
 
-###
+### Hotel search
 GET /hotel-search
 
-###
+### User management
 GET /user-management/users
 
 ###
