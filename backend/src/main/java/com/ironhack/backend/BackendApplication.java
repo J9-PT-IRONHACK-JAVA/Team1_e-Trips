@@ -28,27 +28,29 @@ public class BackendApplication implements CommandLineRunner {
         @Override
         public void run(String... args) throws Exception {
 
-            //Only to show that the API proxy is working:
-            System.out.println("\nThese are the best flight deals from your selected origin and departure date:\n");
-            var printFlightResults = flightApiService.getFlightsByOriginAndDate("LON", "2023-02-11");
-            for (int i = 0; i < printFlightResults.size(); i++) {
-                System.out.println(i+1 + ". " + printFlightResults.get(i).toString());
-            }
-            System.out.println("\n");
+//            //Only to show that the API proxy is working:
+//            System.out.println("\nThese are the best flight deals from your selected origin and departure date:\n");
+//            var printFlightResults = flightApiService.getFlightsByOriginAndDate("LON", "2023-02-11");
+//            for (int i = 0; i < printFlightResults.size(); i++) {
+//                System.out.println(i+1 + ". " + printFlightResults.get(i).toString());
+//            }
+//            System.out.println("\n");
+//
+//            System.out.println("\nAnd some hotels for LON:\n");
+//            var printHotelResults = hotelsApiService.getHotelOffers("LON", "2023-02-11", "2023-02-15", 2);
+//            for (int i = 0; i < printHotelResults.size(); i++) {
+//                System.out.println(i+1 + ". " + printHotelResults.get(i).toString());
+//            }
+//            System.out.println("\n");
+//
+//            System.out.println("\nAnd some hotels for MAD:\n");
+//            var printSimulatedHotelResults = hotelsApiService.getHotelOffers("MAD", "2023-02-11", "2023-02-15", 2);
+//            for (int i = 0; i < printSimulatedHotelResults.size(); i++) {
+//                System.out.println(i+1 + ". " + printSimulatedHotelResults.get(i).toString());
+//            }
+//            System.out.println("\n");
 
-            System.out.println("\nAnd some hotels for LON:\n");
-            var printHotelResults = hotelsApiService.getHotelOffers("LON", "2023-02-11", "2023-02-15", 2);
-            for (int i = 0; i < printHotelResults.size(); i++) {
-                System.out.println(i+1 + ". " + printHotelResults.get(i).toString());
-            }
-            System.out.println("\n");
-
-            System.out.println("\nAnd some hotels for MAD:\n");
-            var printSimulatedHotelResults = hotelsApiService.getHotelOffers("MAD", "2023-02-11", "2023-02-15", 2);
-            for (int i = 0; i < printSimulatedHotelResults.size(); i++) {
-                System.out.println(i+1 + ". " + printSimulatedHotelResults.get(i).toString());
-            }
-            System.out.println("\n");
+                System.out.println(flightApiService.getFlightsByOriginAndDate("MAD", "2023-01-01"));
 
         }
 }

@@ -2,6 +2,7 @@ package com.ironhack.backend.repository;
 
 import com.ironhack.backend.enums.BookingType;
 import com.ironhack.backend.model.Booking;
+import com.ironhack.backend.model.FlightBooking;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -12,4 +13,5 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     Optional<Booking> findAllByBookingType(BookingType bookingType);
 
     List<Booking> findAllByUserUserId(Long id);
+
 }

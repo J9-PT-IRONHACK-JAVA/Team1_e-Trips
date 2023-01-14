@@ -11,6 +11,7 @@ import com.ironhack.backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,8 +30,16 @@ public class BookingService {
         return bookingRepository.findById(id).orElseThrow(() -> new BookingNotFoundException(id));
     }
 
-    public List<Booking> findAllByUser(Long id) {
-        return bookingRepository.findAllByUserUserId(id);
+    public MyBookingsDTO findAllByUser(Long id) {
+
+        var allBookings = bookingRepository.findAllByUserUserId(id);
+        List<FlightBookingDTO> listOfFlightBookingDTO = new ArrayList<>();
+        List<HotelBookingDTO> listOfHotelBookingDTO = new ArrayList<>();
+        for(Booking booking : allBookings){
+            if (booking instanceof FlightBooking) listOfFlightBookingDTO.add(FlightBookingDTO.fromFlightBooking((FlightBooking) booking));
+            else listOfHotelBookingDTO.add(HotelBookingDTO.fromHotelBooking((HotelBooking) booking));
+        }
+        return new MyBookingsDTO(listOfFlightBookingDTO, listOfHotelBookingDTO);
     }
 
     public HotelBookingDTO saveHotel(Long userId, HotelDTO hotelDTO) {

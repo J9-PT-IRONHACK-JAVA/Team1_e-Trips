@@ -21,13 +21,8 @@ public class BookingsController {
     private final BookingService bookingService;
 
     @GetMapping("/{userId}")
-    public List<BookingDTO> getUserBookings(@PathVariable Long userId){
-        var userBookings = bookingService.findAllByUser(userId);
-        List<BookingDTO> userBookingsDTO = new ArrayList<>();
-        for (Booking booking : userBookings){
-            userBookingsDTO.add(BookingDTO.fromBooking(booking));
-        }
-        return userBookingsDTO;
+    public MyBookingsDTO getUserBookings(@PathVariable Long userId){
+        return bookingService.findAllByUser(userId);
     }
 
     @PostMapping("/save-flight")
