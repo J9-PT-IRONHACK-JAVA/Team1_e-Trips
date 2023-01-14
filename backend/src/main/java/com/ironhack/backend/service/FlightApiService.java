@@ -19,14 +19,23 @@ public class FlightApiService {
     private final AmadeusProxy amadeusProxy;
 
     public List<FlightDTO> getFlightsByOriginAndDate(String origin, String departureDate){
-        var response = amadeusProxy.getInspirationFlights(origin, departureDate);
+        try {
+            var response = amadeusProxy.getInspirationFlights(origin, departureDate);
+            return convertFlightDTOListFromProxyResponse(response);
+        } catch (Exception e) {
 
-        return convertFlightDTOListFromProxyResponse(response);
+            var listFlightDTO = new ArrayList<>(List.of(
+                    new FlightDTO("MAD", "LON", LocalDate.parse("2023-01-11"), LocalDate.parse("2023-01-20"),BigDecimal.valueOf(100L)),
+                    new FlightDTO("BCN", "LON", LocalDate.parse("2023-01-11"), LocalDate.parse("2023-01-20"),BigDecimal.valueOf(100L)),
+                    new FlightDTO("NYC", "LON", LocalDate.parse("2023-01-11"), LocalDate.parse("2023-01-20"),BigDecimal.valueOf(100L))
+            ));
+            return listFlightDTO;
+        }
     }
+
 
     public List<FlightDTO> getFlightsByOrigin(String origin){
         var response = amadeusProxy.getInspirationFlightsOnlyOrigin(origin);
-
         return convertFlightDTOListFromProxyResponse(response);
     }
 
