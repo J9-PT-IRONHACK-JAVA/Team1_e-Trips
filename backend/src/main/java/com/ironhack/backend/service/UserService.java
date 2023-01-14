@@ -35,7 +35,7 @@ public class UserService {
         return userRepository.findById(selectedId);
     }
 
-    private User findUserById(Long id) {
+    public User findUserById(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
     }
 
@@ -44,7 +44,7 @@ public class UserService {
     }
 
     public UserDTO save(UserDTO userDTO) {
-        var userToSave = User.fromDTO(userDTO);
+        var userToSave = User.fromUserDTO(userDTO);
 
         return UserDTO.fromUser(userRepository.save(userToSave));
     }
@@ -55,7 +55,7 @@ public class UserService {
 
 
     public UserDTO createUser(UserDTO user) {
-        var userCreated = userRepository.save(User.fromDTO(user));
+        var userCreated = userRepository.save(User.fromUserDTO(user));
         return UserDTO.fromUser(userCreated);
     }
 
