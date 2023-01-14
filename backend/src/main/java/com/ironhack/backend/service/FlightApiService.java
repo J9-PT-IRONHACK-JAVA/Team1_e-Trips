@@ -4,6 +4,7 @@ import com.ironhack.backend.dto.FlightDTO;
 import com.ironhack.backend.dto.amadeusFlightsDTOs.FlightJson;
 import com.ironhack.backend.dto.amadeusFlightsDTOs.InspirationResponse;
 import com.ironhack.backend.proxy.AmadeusProxy;
+import com.ironhack.backend.proxy.WireMockApi;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import java.util.List;
 public class FlightApiService {
 
     private final AmadeusProxy amadeusProxy;
+    private final WireMockApi wireMockApi;
 
     public List<FlightDTO> getFlightsByOriginAndDate(String origin, String departureDate){
         try {
@@ -24,12 +26,15 @@ public class FlightApiService {
             return convertFlightDTOListFromProxyResponse(response);
         } catch (Exception e) {
 
-            var listFlightDTO = new ArrayList<>(List.of(
-                    new FlightDTO("MAD", "LON", LocalDate.parse("2023-01-11"), LocalDate.parse("2023-01-20"),BigDecimal.valueOf(100L)),
-                    new FlightDTO("BCN", "LON", LocalDate.parse("2023-01-11"), LocalDate.parse("2023-01-20"),BigDecimal.valueOf(100L)),
-                    new FlightDTO("NYC", "LON", LocalDate.parse("2023-01-11"), LocalDate.parse("2023-01-20"),BigDecimal.valueOf(100L))
-            ));
-            return listFlightDTO;
+//            var listFlightDTO = new ArrayList<>(List.of(
+//                    new FlightDTO("LON", "BCN", LocalDate.parse("2023-01-11"), LocalDate.parse("2023-01-20"),BigDecimal.valueOf(100L)),
+//                    new FlightDTO("LON", "MAD", LocalDate.parse("2023-01-11"), LocalDate.parse("2023-01-20"),BigDecimal.valueOf(130L)),
+//                    new FlightDTO("LON", "NYC", LocalDate.parse("2023-01-11"), LocalDate.parse("2023-01-20"),BigDecimal.valueOf(976L))
+//            ));
+//            return listFlightDTO;
+
+            var response = wireMockApi.getInspirationFlights("MAD", "2020-10-22");
+            return convertFlightDTOListFromProxyResponse(response);
         }
     }
 

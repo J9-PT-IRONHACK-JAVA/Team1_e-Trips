@@ -20,23 +20,34 @@ public class HotelsApiService {
 
     public List<HotelDTO> getHotelOffers(String cityCode, String checkInDate, String checkOutDate, Integer guests){
 
-        if(cityCode.equals("LON")) {
-            var availabilityResponse =
-                    amadeusProxy.getAvailability(getArrayOfHotelsIdInCity(cityCode), guests, checkInDate, checkOutDate);
+        try {
+            if (cityCode.equals("LON")) {
+                var availabilityResponse =
+                        amadeusProxy.getAvailability(getArrayOfHotelsIdInCity(cityCode), guests, checkInDate, checkOutDate);
 
-            List<HotelDTO> listOfHotels = new ArrayList<>();
-            for (HotelAvailableOffersJson hotelOffer : availabilityResponse.getData()) {
-                var hotelResult = new HotelDTO();
-                hotelResult.setName(hotelOffer.getHotel().getName());
-                hotelResult.setPrice(BigDecimal.valueOf(Double.parseDouble(hotelOffer.getOffers().get(0).getPrice().getTotal())));
-                hotelResult.setCheckInDate(LocalDate.parse(checkInDate));
-                hotelResult.setCheckOutDate(LocalDate.parse(checkOutDate));
-                hotelResult.setGuests(guests);
+                List<HotelDTO> listOfHotels = new ArrayList<>();
+                for (HotelAvailableOffersJson hotelOffer : availabilityResponse.getData()) {
+                    var hotelResult = new HotelDTO();
+                    hotelResult.setName(hotelOffer.getHotel().getName());
+                    hotelResult.setPrice(BigDecimal.valueOf(Double.parseDouble(hotelOffer.getOffers().get(0).getPrice().getTotal())));
+                    hotelResult.setCheckInDate(LocalDate.parse(checkInDate));
+                    hotelResult.setCheckOutDate(LocalDate.parse(checkOutDate));
+                    hotelResult.setGuests(guests);
 
-                listOfHotels.add(hotelResult);
-            }
+                    listOfHotels.add(hotelResult);
+                }
+                return listOfHotels;
+            } else return getSimulatedHotelOffers(cityCode, checkInDate, checkOutDate, guests);
+
+        } catch (Exception e) {
+            List<HotelDTO> listOfHotels = new ArrayList<>(List.of(
+                    new HotelDTO("Oxford Class Hotel", LocalDate.parse(checkInDate), LocalDate.parse(checkOutDate), guests, generateRandomPrice()),
+                    new HotelDTO("DoubleTree Camden", LocalDate.parse(checkInDate), LocalDate.parse(checkOutDate), guests, generateRandomPrice()),
+                    new HotelDTO("Apex City of London", LocalDate.parse(checkInDate), LocalDate.parse(checkOutDate), guests, generateRandomPrice()),
+                    new HotelDTO("Walkie-Talkie Ritz", LocalDate.parse(checkInDate), LocalDate.parse(checkOutDate), guests, generateRandomPrice())
+            ));
             return listOfHotels;
-        } else return getSimulatedHotelOffers(cityCode,checkInDate,checkOutDate,guests);
+        }
     }
 
     private String[] getArrayOfHotelsIdInCity(String cityCode) {
@@ -58,12 +69,16 @@ public class HotelsApiService {
             hotelResult.setName(hotel.getName());
             hotelResult.setCheckInDate(LocalDate.parse(checkInDate));
             hotelResult.setCheckOutDate(LocalDate.parse(checkOutDate));
-            hotelResult.setPrice(BigDecimal.valueOf(300 + 600*Math.random()).setScale(2, RoundingMode.HALF_UP));
+            hotelResult.setPrice(generateRandomPrice());
             hotelResult.setGuests(guests);
 
             listOfHotelsInCity.add(hotelResult);
         }
         return listOfHotelsInCity;
+    }
+
+    private static BigDecimal generateRandomPrice() {
+        return BigDecimal.valueOf(300 + 600 * Math.random()).setScale(2, RoundingMode.HALF_UP);
     }
 
 }
