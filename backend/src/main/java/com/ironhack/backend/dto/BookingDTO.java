@@ -3,11 +3,15 @@ package com.ironhack.backend.dto;
 import com.ironhack.backend.enums.BookingType;
 import com.ironhack.backend.model.Booking;
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class BookingDTO {
     private Long id;
     @NotBlank(message = "Booking type can't be blank")

@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -33,6 +34,7 @@ class FlightSearchControllerTest {
     HotelsApiService hotelsApiService;
 
     @Test
+    @WithMockUser(username = "Admin",roles = "ADMIN")
     void getInspirationFlights() throws Exception {
 
         var origin ="Madrid";
@@ -44,8 +46,8 @@ class FlightSearchControllerTest {
         when(flightApiService.getFlightsByOrigin(origin)).thenReturn(flightDTOList);
 
         mockMvc.perform(get("/flight-search/inspire")
-                        .param("origin","MAD")
-                        .with(httpBasic("admin","admin")))
+                        .param("origin","Madrid"))
+                        //.with(httpBasic("admin","admin")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.*", hasSize(2)));
 
     }
