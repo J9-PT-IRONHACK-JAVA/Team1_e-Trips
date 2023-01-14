@@ -70,6 +70,7 @@ class BookingsControllerTest {
     @Test
     public void updateBooking() throws Exception {
 
+
         var bookingId=1L;
         var name = "Paquito";
         var travelers = 2;

@@ -31,6 +31,7 @@ class HotelSearchControllerTest {
     @MockBean
     BookingService bookingService;
 
+
     @Test
     void findHotelOffers() throws Exception {
 
