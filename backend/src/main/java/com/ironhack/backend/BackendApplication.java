@@ -1,7 +1,6 @@
 package com.ironhack.backend;
 
 
-import com.ironhack.backend.proxy.AuthAmadeusProxy;
 import com.ironhack.backend.service.FlightApiService;
 import com.ironhack.backend.service.HotelsApiService;
 import lombok.RequiredArgsConstructor;
@@ -51,6 +50,7 @@ public class BackendApplication implements CommandLineRunner {
 //            System.out.println("\n");
 
                 System.out.println(flightApiService.getFlightsByOriginAndDate("MAD", "2023-01-01"));
+                System.out.println(hotelsApiService.getHotelOffers("LON", "2023-02-22","2023-03-11",2));
 
         }
 }
