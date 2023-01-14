@@ -38,7 +38,6 @@ public class FlightApiService {
         }
     }
 
-
     public List<FlightDTO> getFlightsByOrigin(String origin){
         var response = amadeusProxy.getInspirationFlightsOnlyOrigin(origin);
         return convertFlightDTOListFromProxyResponse(response);

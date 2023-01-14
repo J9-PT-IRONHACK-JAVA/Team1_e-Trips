@@ -46,11 +46,10 @@ public class BookingsController {
         return bookingService.updateBooking(bookingId, name, travelers, purpose);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteBooking(@RequestParam("booking") String bookingId){
-        //incorporar validación de ROLE_ADMIN --> (D) lo puse en scurity chain como request USER, no sé si haga falta validarlo aquí
-        bookingService.delete(Long.valueOf(bookingId));
+    public void deleteBooking(@PathVariable(name = "id") Long bookingId){
+        bookingService.delete(bookingId);
     }
 
 }
