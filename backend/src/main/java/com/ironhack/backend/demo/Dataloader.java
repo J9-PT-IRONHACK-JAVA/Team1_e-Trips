@@ -46,9 +46,6 @@ public class Dataloader {
         log.info("User " + user2.getUsername() + " was created successfully");
         log.info("Finished demo user loading.");
 
-        Booking hotelBooking1 = new HotelBooking(2L, BookingType.HOTEL, user2, LocalDate.of(2023, 7, 15), LocalDate.of(2023, 7, 17), "Hilton", 1, new BigDecimal(78.89));
-        bookingRepository.save(hotelBooking1);
-
         var mockedFlightList = new ArrayList<>(List.of(
                 new FlightBooking(1L, BookingType.FLIGHT, user1, LocalDate.parse("2023-01-27"), LocalDate.parse("2023-01-29"), "BCN", "MAD", "VY2340", "Vueling", 1, new BigDecimal(56.99)),
                 new FlightBooking(2L, BookingType.FLIGHT, user1, LocalDate.parse("2023-02-10"), LocalDate.parse("2023-02-13"), "BCN", "LON", "VY2340", "Vueling", 1, new BigDecimal(128.50)),
