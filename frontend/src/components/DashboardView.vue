@@ -78,7 +78,11 @@ import { store } from "@/store";
 import router from "@/routers";
 import BookingCard from "./BookingCard.vue";
 import LoginModal from "./LoginModal.vue";
-import { getFlights } from "../services/FlightService";
+import {
+  getFlights,
+  getFlightsByDate,
+  getFlightsByOrigin,
+} from "../services/FlightService";
 import { getAirportName } from "../utils/AirportCodes";
 import { createFlightBooking } from "../services/MyBookingsService";
 
@@ -95,32 +99,7 @@ export default {
     return {
       showModal: false,
       loading: true,
-      items: [
-        {
-          id: 1,
-          origin: "MAD",
-          destination: "LON",
-          departureDate: [2023, 2, 10],
-          returnDate: [2023, 2, 13],
-          price: 128.5,
-        },
-        {
-          id: 2,
-          origin: "MAD",
-          destination: "NYC",
-          departureDate: [2023, 2, 18],
-          returnDate: [2023, 2, 22],
-          price: 750.25,
-        },
-        {
-          id: 3,
-          origin: "MAD",
-          destination: "BOS",
-          departureDate: [2023, 3, 6],
-          returnDate: [2023, 2, 22],
-          price: 326.0,
-        },
-      ],
+      items: [],
     };
   },
 
@@ -166,9 +145,6 @@ export default {
     },
 
     async getSearchResults(origin, departureDate) {
-      await getFlights(origin, departureDate);
-      this.loading = false;
-      /*
       if (origin && departureDate) {
         const response = await getFlights(origin, departureDate);
         this.items = response;
@@ -178,7 +154,8 @@ export default {
       } else if (origin) {
         const response = await getFlightsByOrigin(origin);
         this.items = response;
-      }*/
+      }
+      this.loading = false;
     },
   },
   created() {

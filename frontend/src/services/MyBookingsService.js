@@ -42,7 +42,7 @@ export async function createHotelBooking(
     price: price,
   };
   const response = await axios.post(
-    `/my-bookings/save-flight?userId=${store.state.user.user_id}`,
+    `/my-bookings/save-hotel?userId=${store.state.user.user_id}`,
     payload
   );
   return response.data;
