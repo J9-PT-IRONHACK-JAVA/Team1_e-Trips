@@ -60,6 +60,7 @@ export default {
       emit("close");
       router.push({ name: "MyBookings" });
       store.commit("SET_USER", response);
+      console.log(props.booking);
       if (props.booking.origin) {
         await createFlightBooking(
           props.booking.origin,

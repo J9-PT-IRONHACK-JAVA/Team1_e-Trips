@@ -1,51 +1,57 @@
 <template>
-  <h1>My trips</h1>
-  <div class="card-container" :key="componentKey">
-    <BookingCard
-      v-for="(flight, index) in flights"
-      :key="index"
-      :id="index"
-      :inBookings="true"
-      @deleteBooking="deleteBooking(flight)"
-    >
-      <template #image>
-        <img
-          :src="`https://picsum.photos/id/${
-            index + Math.floor(Math.random() * (180 - 30)) + 30
-          }/500/300`"
-        />
-      </template>
-      <template #destination>
-        {{ formatAirport(flight.origin) }} -
-        {{ formatAirport(flight.destination) }}
-      </template>
-      <template #departureDate>
-        Departure: {{ formatDate(flight.departureDate) }}
-      </template>
-      <template #returnDate>
-        Return: {{ formatDate(flight.arrivalDate) }}</template
+  <div>
+    <div><h1>My flights</h1></div>
+
+    <div class="card-container" :key="componentKey">
+      <BookingCard
+        v-for="(flight, index) in flights"
+        :key="index"
+        :id="index"
+        :inBookings="true"
+        @deleteBooking="deleteBooking(flight)"
       >
-      <template #price> Price: {{ flight.price }} EUR</template>
-    </BookingCard>
-    <!--<BookingCard
-      v-for="(hotel, index) in hotels"
-      :key="index"
-      :id="index"
-      :inBookings="true"
-      @deleteBooking="deleteBooking(hotel)"
-    >
-      <template #image>
-        <img
-          :src="`https://picsum.photos/id/${
-            index + Math.floor(Math.random() * (180 - 30)) + 30
-          }/500/300`"
-        />
-      </template>
-      <template #destination> {{ hotel }}</template>
-      <template #departureDate> {{ hotel }} </template>
-      <template #returnDate> {{ hotel }}</template>
-      <template #price> {{ hotel }}</template>
-    </BookingCard>-->
+        <template #image>
+          <img
+            :src="`https://picsum.photos/id/${
+              index + Math.floor(Math.random() * (180 - 30)) + 30
+            }/500/300`"
+          />
+        </template>
+        <template #destination>
+          {{ formatAirport(flight.origin) }} -
+          {{ formatAirport(flight.destination) }}
+        </template>
+        <template #departureDate>
+          Departure: {{ formatDate(flight.departureDate) }}
+        </template>
+        <template #returnDate>
+          Return: {{ formatDate(flight.arrivalDate) }}</template
+        >
+        <template #price> Price: {{ flight.price }} EUR</template>
+      </BookingCard>
+    </div>
+    <div><h1>My hotels</h1></div>
+    <div class="card-container" :key="componentKey">
+      <BookingCard
+        v-for="(hotel, index) in hotels"
+        :key="index"
+        :id="index"
+        :inBookings="true"
+        @deleteBooking="deleteBooking(hotel)"
+      >
+        <template #image>
+          <img
+            :src="`https://picsum.photos/id/${
+              index + Math.floor(Math.random() * (180 - 30)) + 30
+            }/500/300`"
+          />
+        </template>
+        <template #destination>Hotel name: {{ hotel.hotelName }}</template>
+        <template #departureDate> Check in: {{ hotel.arrivalDate }} </template>
+        <template #returnDate> Check out:{{ hotel.departureDate }}</template>
+        <template #price> {{ hotel.price }}</template>
+      </BookingCard>
+    </div>
   </div>
 </template>
 
@@ -84,13 +90,13 @@ export default {
     },
 
     async getBookings() {
-      console.log(store.state.user);
       const response = await getBookings(store.state.user.user_id);
       this.flights = response.flights;
       this.hotels = response.hotels;
     },
 
     async deleteBooking(item) {
+      console.log(item);
       await cancelBooking(item.id);
       this.forceRerender();
     },
